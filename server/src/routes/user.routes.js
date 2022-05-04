@@ -6,5 +6,6 @@ const api = express.Router();
 
 
 api.get('/test', userController.test);
-
+api.post('/Register', userController.userRegister);
+api.post('/login', userController.login);
 module.exports = api;
