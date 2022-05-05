@@ -1,10 +1,8 @@
 'use strict'
 
 const User = require('../model/user.model');
-const { validateData, encrypt, searchUser,
-    checkPass, checkUpdate, checkPermission,
-    checkUpdateAdmin } = require('../utils/validate');
-    const jwt = require('../services/jwt');
+const { validateData, encrypt, searchUser, checkPass} = require('../utils/validate');
+const jwt = require('../services/jwt')
 
 
 exports.test = (req, res) => {
