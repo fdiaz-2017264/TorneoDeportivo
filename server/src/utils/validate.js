@@ -40,6 +40,20 @@ exports.checkPass = async (password, hash)=>{
     }
 }
 
+
+exports.checkPermission = async (userId, sub)=>{
+    try{
+        if(userId != sub){
+            return false;
+        }else{
+            return true;
+        }
+    }catch(err){
+        console.log(err);
+        return err;
+    }
+}
+
 exports.checkUpdate = async (user)=>{
     if(user.password || 
        Object.entries(user).length === 0 || 
