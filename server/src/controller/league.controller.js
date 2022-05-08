@@ -7,7 +7,7 @@ exports.testLeague = (req, res)=>{
     res.send({message: 'Si funciona :)'});
 }
 
-exports.saveLeague = (req, res)=>{
+exports.saveLeague = async (req, res)=>{
     try{
         const params = req.body;
         const data = {
