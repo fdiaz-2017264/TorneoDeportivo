@@ -1,13 +1,13 @@
 'use strict'
 
 const League = require('../model/league.model');
-const validateData = require('../utils/validate');
+const {validateData} = require('../utils/validate');
 
 exports.testLeague = (req, res)=>{
     res.send({message: 'Si funciona :)'});
 }
 
-exports.saveLeague = (req, res)=>{
+exports.saveLeague = async (req, res)=>{
     try{
         const params = req.body;
         const data = {
@@ -30,7 +30,7 @@ exports.saveLeague = (req, res)=>{
 
 exports.deleteLeague = async(req, res)=>{
     try{
-        const leagueId = req.paramss.id;
+        const leagueId = req.params.id;
         const leagueDeleted = await League.findOneAndDelete({leagueId});
         if(!leagueDeleted) return res.status(500).send({message: 'League not found or already deleted'});
         return res.send({leagueDeleted, message: 'League deleted'});
