@@ -6,7 +6,7 @@ const api = express.Router();
 
 api.get('/testLeague', leagueController.testLeague);
 api.post('/saveLeague',  leagueController.saveLeague);
-api.delete('/deleteLeague', leagueController.deleteLeague);
-api.put('/updatedLeague', leagueController.updatedLeague);
+api.delete('/deleteLeague/:id', leagueController.deleteLeague);
+api.put('/updatedLeague/:id', leagueController.updatedLeague);
 
 module.exports = api;
