@@ -7,7 +7,7 @@ const secretKey = 'Kjs1yZ23';
 exports.createToken = async (user)=>{
     try{
         const payload ={
-            sub: sub._id,
+            sub: user._id,
             name: user.name,
             username: user.username,
             email: user.emai,
