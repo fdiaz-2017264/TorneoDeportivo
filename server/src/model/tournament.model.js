@@ -2,15 +2,15 @@
 
 const mongoose = require('mongoose');
 
-const invoiceSchema = mongoose.Schemo({
+const TournamentSchema = mongoose.Schema({
     name: String,
     league: [
         {
-            ObjectId
+            type: mongoose.Schema.ObjectId, ref: 'League'
         }
     ],
-    author: ObjectId
+    author: {type: mongoose.Schema.ObjectId, ref: 'User'}
 
 });
 
-module.exports = mongoose.modul('Invoice', invoiceSchema)
+module.exports = mongoose.model('Tournament', TournamentSchema)
