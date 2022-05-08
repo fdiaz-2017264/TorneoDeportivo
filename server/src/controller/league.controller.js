@@ -1,7 +1,7 @@
 'use strict'
 
 const League = require('../model/league.model');
-const validateData = require('../utils/validate');
+const {validateData} = require('../utils/validate');
 
 exports.testLeague = (req, res)=>{
     res.send({message: 'Si funciona :)'});
