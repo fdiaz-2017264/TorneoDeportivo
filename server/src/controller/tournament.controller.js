@@ -68,3 +68,28 @@ exports.update = async(req, res)=>{
     }
 }
 
+exports.getTournaments = async(req, res)=>{
+    try {
+        const tournament = await Tournament.find()
+        .lean()
+        .populate('league');
+        return res.send({message: 'Tournament found:', tournament})
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({message: 'Error getting Tournaments'});
+    }
+}
+
+exports.getTournament =async(req, res)=>{
+ try {
+    const tournamentId = req.params.id;
+    const tournament = await Tournament.findOne({_id: tournamentId})
+    .lean()
+    .populate('league');
+    if(!tournament) return res.send({message: 'Product not found'});
+        return res.send({message: 'Tournament found:', tournament});
+ } catch (err) {
+    console.log(error);
+    return res.status(500).send({err, message: 'Error getting Tournament'});
+ }
+}
