@@ -47,7 +47,7 @@ exports.deleteTournament = async(req, res)=>{
     }
 }
 
-exports. update = async(req, res)=>{
+exports.update = async(req, res)=>{
     try {
         const tournamentId = req.params.id;
         const params = req.body;
