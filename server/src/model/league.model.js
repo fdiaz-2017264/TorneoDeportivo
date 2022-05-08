@@ -12,7 +12,7 @@ const leagueSchema = mongoose.Schema({
             //resultado: String
         }
     ], */
-    stage: number
+    stage: Number
 });
 
 module.exports = mongoose.model('League', leagueSchema);
