@@ -2,7 +2,7 @@
 
 const jwt = require('jwt-simple');
 const moment = require('moment');
-const secretKey= '5234812';
+const secretKey= 'Kjs1yZ23';
 
 exports.ensureAuth = async (req, res, next) =>{
     if(!req.headers.authorization){
