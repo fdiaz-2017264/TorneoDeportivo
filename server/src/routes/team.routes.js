@@ -3,6 +3,7 @@
 const teamController = require('../controller/team.controller');
 const express = require('express');
 const api = express.Router();
+const mdAuth = require('../services/authenticated')
 
 
 api.post('/saveEquipos', mdAuth.ensureAuth, teamController.saveEquipos);
