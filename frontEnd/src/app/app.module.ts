@@ -10,6 +10,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { LeaguesComponent } from './components/leagues/leagues.component';
 import { TournamentsComponent } from './components/tournaments/tournaments.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     RegisterComponent,
     LeaguesComponent,
     TournamentsComponent,
-    NavBarComponent
+    NavBarComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
