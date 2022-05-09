@@ -5,16 +5,16 @@ const mongoose = require('mongoose');
 const leagueSchema = mongoose.Schema({
     name: String,
     description: String,
-    teams:[{type: moongose.Schema.ObjectId, ref:'Equipos'}],
-    score:[
+    teams: [{ type: mongoose.Schema.ObjectId, ref: 'Equipo' }],
+    score: [
         {
-            team1: {type:moongose.Schema.ObjectId, ref:'Equipos'},
+            team1: { type: mongoose.Schema.ObjectId, ref: 'Equipo' },
             results1: Number,
-            teams2: {type: moongose.Schema.ObjectId, ref:'Equipos'},
+            team2: { type: mongoose.Schema.ObjectId, ref: 'Equipo' },
             results2: Number
         }
     ],
-    stage: Number
+    user: { type: mongoose.Schema.ObjectId, ref: 'User' }
 });
 
 module.exports = mongoose.model('League', leagueSchema);
