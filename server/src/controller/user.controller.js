@@ -199,7 +199,7 @@ exports.saveUser = async(req, res)=>{
 
         const msg = validateData(data);
         if(msg) return res.status(400).send(msg);
-        const userExist = await alreadyUser(params.username);
+        const userExist = await searchUser(params.username);
         if(userExist) return res.send({message: 'Username already in use, use another'});
         
         if(params.role != 'ADMIN' && params.role != 'CLIENT') return res.status(400).send({message: 'Invalid role'});
