@@ -9,6 +9,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LeaguesComponent } from './components/leagues/leagues.component';
 import { TournamentsComponent } from './components/tournaments/tournaments.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TournamentsComponent } from './components/tournaments/tournaments.compo
     NotFoundComponent,
     RegisterComponent,
     LeaguesComponent,
-    TournamentsComponent
+    TournamentsComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
