@@ -11,6 +11,9 @@ import { LeaguesComponent } from './components/leagues/leagues.component';
 import { TournamentsComponent } from './components/tournaments/tournaments.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { LeagueDescriptionComponent } from './components/league-description/league-description.component';
+import { UsersComponent } from './components/users/users.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { FooterComponent } from './components/footer/footer.component';
     LeaguesComponent,
     TournamentsComponent,
     NavBarComponent,
-    FooterComponent
+    FooterComponent,
+    LeagueDescriptionComponent,
+    UsersComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
