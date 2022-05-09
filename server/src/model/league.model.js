@@ -5,13 +5,15 @@ const mongoose = require('mongoose');
 const leagueSchema = mongoose.Schema({
     name: String,
     description: String,
-    //teams: String Aquí van los objects
-    /*marcador: [
+    teams:[{type: moongose.Schema.ObjectId, ref:'Equipos'}],
+    score:[
         {
-            //team_name: String
-            //resultado: String
+            team1: {type:moongose.Schema.ObjectId, ref:'Equipos'},
+            results1: Number,
+            teams2: {type: moongose.Schema.ObjectId, ref:'Equipos'},
+            results2: Number
         }
-    ], */
+    ],
     stage: Number
 });
 

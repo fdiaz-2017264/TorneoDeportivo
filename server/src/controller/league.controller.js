@@ -51,3 +51,27 @@ exports.updatedLeague = async(req, res)=>{
         return err;
     }
 }
+
+exports.createScore = async(req, res)=> {
+    try{
+        const leagueId = req.params.id;
+        const params = req.body;
+        const data = {
+            score: [
+                {
+                    team1: params.team1,
+                    result1: params.result1,
+                    team2: params.team2,
+                    result2: params.result2
+                }
+            ]
+        }
+        const msg = validateData(data);
+        if(msg) return res.status(400).send(msg);
+        let score = await League.findOneAndUpdate({_id: leagueId}, data, {new:true});
+        return res.send({message: 'Score created', score});
+    }catch(err){
+        console.log(err);
+        return res.status(500).send({message: 'Score not saved'});
+    }
+}
