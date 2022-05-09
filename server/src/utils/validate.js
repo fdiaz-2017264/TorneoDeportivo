@@ -71,3 +71,8 @@ exports.checkUpdateAdmin = async(user)=>{
         return true;
     }
 }
+
+exports.ownAccount = async(user, sub)=>{
+    if(user != sub) 
+        return 'action unauthorized'; 
+}

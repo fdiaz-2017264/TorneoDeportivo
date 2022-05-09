@@ -1,7 +1,7 @@
 'use strict'
 
 const League = require('../model/league.model');
-const {validateData} = require('../utils/validate');
+const {validateData, ownAccount} = require('../utils/validate');
 
 exports.testLeague = (req, res)=>{
     res.send({message: 'Si funciona :)'});
@@ -13,8 +13,7 @@ exports.saveLeague = async (req, res)=>{
         const data = {
             name: params.name,
             description: params.description,
-            //marcador: String,
-            stage: params.stage
+            user: req.user.sub
         }
         const msg = validateData(data);
         if(!msg){
@@ -31,6 +30,9 @@ exports.saveLeague = async (req, res)=>{
 exports.deleteLeague = async(req, res)=>{
     try{
         const leagueId = req.params.id;
+        const league = await League.findOne({_id: leagueId}).lean();
+        const account = await ownAccount(league.user, req.user.sub);
+        if(account ) return res.send(account)
         const leagueDeleted = await League.findOneAndDelete({leagueId});
         if(!leagueDeleted) return res.status(500).send({message: 'League not found or already deleted'});
         return res.send({leagueDeleted, message: 'League deleted'});
@@ -44,34 +46,40 @@ exports.updatedLeague = async(req, res)=>{
     try{
         const leagueId = req.params.id;
         const params = req.body;
+        const league = await League.findOne({_id: leagueId}).lean();
+        const account = await ownAccount(league.user, req.user.sub);
+        if(account ) return res.send(account)
         const leagueUpdated = await League.findOneAndUpdate({_id: leagueId}, params, {new: true});
         return res.send({message: 'league updated', leagueUpdated});
-    }catch{
+    }catch(err){
         console.log(err);
         return err;
     }
 }
 
-exports.createScore = async(req, res)=> {
-    try{
+exports.createScore = async (req, res) => {
+    try {
         const leagueId = req.params.id;
         const params = req.body;
         const data = {
+            //name
             score: [
                 {
                     team1: params.team1,
-                    result1: params.result1,
+                    results1: params.results1,
                     team2: params.team2,
-                    result2: params.result2
+                    results2: params.results2
                 }
             ]
+
         }
         const msg = validateData(data);
-        if(msg) return res.status(400).send(msg);
-        let score = await League.findOneAndUpdate({_id: leagueId}, data, {new:true});
-        return res.send({message: 'Score created', score});
-    }catch(err){
+        if (msg) return res.status(400).send(msg);
+        let score = await League.findOneAndUpdate({ _id: leagueId }, data, { new: true });
+        //console.log(req.user.sub);
+        return res.send({ message: 'Score created', score });
+    } catch (err) {
         console.log(err);
-        return res.status(500).send({message: 'Score not saved'});
+        return res.status(500).send({ message: 'Score not saved' });
     }
 }
