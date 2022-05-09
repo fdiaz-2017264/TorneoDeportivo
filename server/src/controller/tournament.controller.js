@@ -17,6 +17,8 @@ exports.createTournament = async(req, res) =>{
             name: params.name,
             league: params.league
         }
+        const tour = await Tournament.findOne({name: params.name});
+        if(tour) return res.status(500).send({message: 'Tournament already exist'});
         const msg = validate.validateData(data);
         if(msg) return res.status(400).send(msg);
         const leagueExist = await League.findOne({_id: params.league});

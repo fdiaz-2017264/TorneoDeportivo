@@ -15,6 +15,8 @@ exports.saveLeague = async (req, res)=>{
             description: params.description,
             user: req.user.sub
         }
+        const league = await League.findOne({name: params.name});
+        if(league) return res.status(500).send({message: 'League already exist'});
         const msg = validateData(data);
         if(!msg){
             const league = new League(data);
