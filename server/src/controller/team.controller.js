@@ -7,14 +7,15 @@ exports.saveEquipos = async(req, res) =>{
     try{
     const params = req.body; 
     const data = {
-        name:params.name,
-        points: params.points,
-        goals: params.goals
+        name:params.name
+        
     }   
     const  msg = validate.validateData(data);
     if(msg) return res.status(400).send(msg); 
     const alreadyName = await Equipos.findOne({name: params.name});
     if(alreadyName) return res.send({message: 'Ya se creo el equipo'}); 
+    data.points = params.points;
+    data.goals = params.goals
     const equipos = new Equipos(data);
     await equipos.save(); 
     return res.send({message: 'Equipo Creado'})
