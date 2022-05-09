@@ -3,13 +3,14 @@
 const tourController = require('../controller/tournament.controller');
 const express = require('express');
 const api = express.Router();
+const mdAuth = require('../services/authenticated');
 
 api.get('/testTour', tourController.testTour);
-api.post('/createTour', tourController.createTournament);
-api.delete('/deleteTour/:id', tourController.deleteTournament);
-api.put('/update/:id', tourController.update)
-api.get('/getTournaments', tourController.getTournaments);
-api.get('/getTournament/:id', tourController.getTournament);
+api.post('/createTour', [mdAuth.ensureAuth, mdAuth.isAdmin], tourController.createTournament);
+api.delete('/deleteTour/:id', [mdAuth.ensureAuth, mdAuth.isAdmin], tourController.deleteTournament);
+api.put('/update/:id', [mdAuth.ensureAuth, mdAuth.isAdmin], tourController.update)
+api.get('/getTournaments', [mdAuth.ensureAuth, mdAuth.isAdmin], tourController.getTournaments);
+api.get('/getTournament/:id', [mdAuth.ensureAuth, mdAuth.isAdmin], tourController.getTournament);
 
 
 module.exports = api;

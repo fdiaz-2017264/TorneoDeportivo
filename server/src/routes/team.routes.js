@@ -5,13 +5,13 @@ const express = require('express');
 const api = express.Router();
 
 
-api.post('/saveEquipos', teamController.saveEquipos);
+api.post('/saveEquipos', mdAuth.ensureAuth, teamController.saveEquipos);
 
-api.put('/equiposUpdate/:id', teamController.equiposUpdate);
+api.put('/equiposUpdate/:id', mdAuth.ensureAuth, teamController.equiposUpdate);
 
-api.delete('/equiposDelete/:id',teamController.equiposDelete);
+api.delete('/equiposDelete/:id', mdAuth.ensureAuth, teamController.equiposDelete);
 
-api.get('/getEquipos', teamController.getEquipos);
+api.get('/getEquipos', mdAuth.ensureAuth, teamController.getEquipos);
 
 
 module.exports = api; 

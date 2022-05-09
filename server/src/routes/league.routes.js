@@ -5,8 +5,8 @@ const express = require('express');
 const api = express.Router();
 
 api.get('/testLeague', leagueController.testLeague);
-api.post('/saveLeague',  leagueController.saveLeague);
-api.delete('/deleteLeague/:id', leagueController.deleteLeague);
-api.put('/updatedLeague/:id', leagueController.updatedLeague);
+api.post('/saveLeague', mdAuth.ensureAuth,  leagueController.saveLeague);
+api.delete('/deleteLeague/:id', mdAuth.ensureAuth, leagueController.deleteLeague);
+api.put('/updatedLeague/:id', mdAuth.ensureAuth, leagueController.updatedLeague);
 
 module.exports = api;
