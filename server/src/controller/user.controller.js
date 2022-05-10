@@ -50,7 +50,7 @@ exports.login = async(req, res)=>{
             let token = await jwt.createToken(alreadyUse);
             delete alreadyUse.password;
 
-            return res.send({ token, message: 'Login successfuly, Welcome!', })
+            return res.send({ token, message: 'Login successfuly, Welcome!', alreadyUse})
        }else return res.status(401).send({message: 'Username or Password incorrect'});
     } catch(err){
         console.log(err);

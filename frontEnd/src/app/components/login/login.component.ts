@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
       next:(response:any)=>{
         alert(response.message)
         localStorage.setItem('token', response.token);
+        localStorage.setItem('identity', JSON.stringify(response.alreadyUse));
         return this.router.navigateByUrl('/');
       },
       error: (err)=>{
@@ -33,6 +34,8 @@ export class LoginComponent implements OnInit {
       }
     })
   }
+
+
 
   
 }
