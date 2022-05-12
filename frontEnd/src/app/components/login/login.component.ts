@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.registerAdmin();
   }
 
   login(loginForm:any){
@@ -35,7 +36,14 @@ export class LoginComponent implements OnInit {
     })
   }
 
-
+  registerAdmin(){
+    this.userRest.createAdmin().subscribe({
+      next: (response:any)=>{
+        this.user = response.save
+      },
+      error:(err)=> alert(err.error.message)
+    })
+  }
 
   
 }

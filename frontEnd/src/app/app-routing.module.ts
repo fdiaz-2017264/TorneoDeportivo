@@ -21,7 +21,7 @@ const routes: Routes = [
   {path: 'users', canActivate: [UserGuard, AdminGuard], component: UsersComponent},
   {path: 'league', canActivate: [UserGuard], component: LeaguesComponent},
   {path: 'leagueDescription', canActivate: [UserGuard], component: LeagueDescriptionComponent},
-  {path: 'profile/:id', canActivate: [UserGuard], component: ProfileComponent},
+  {path: 'profile', canActivate: [UserGuard], component: ProfileComponent},
   {path: '**', component: NotFoundComponent}
 ];
 

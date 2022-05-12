@@ -10,6 +10,13 @@ import { UserRestService } from 'src/app/services/userRest/user-rest.service';
 export class UsersComponent implements OnInit {
   user: UserModel;
   users: any;
+  role: any[] = [
+    { role: 'ADMIN', name: 'Administrador' },
+    { role: 'CLIENT', name: 'Cliente' }
+  ]
+  userUpdate: any;
+
+
   constructor(
     private userRest: UserRestService,
   ) {
@@ -29,29 +36,48 @@ export class UsersComponent implements OnInit {
     })
   }
 
-  saveUser(userForm:any){
+  saveUser(userForm: any) {
     this.userRest.saveUser(this.user).subscribe({
-      next: (response:any)=>{
+      next: (response: any) => {
         alert(response.message);
-    },
-    error:(err)=>{
-      userForm.reset();
-      return alert(err.error.message || err.error)
-    }
+        userForm.reset();
+        this.getUsers();
+      },
+      error: (err) => {
+        userForm.reset();
+        return alert(err.error.message || err.error)
+      }
 
+    })
+  }
+
+  getUser(id: string) {
+    this.userRest.getUser(id).subscribe({
+      next: (res: any) => this.userUpdate = res.user,
+      error: (err) => alert(err.error.message)
+    })
+  }
+
+  updateUs() {
+    this.userUpdate.password = undefined;
+    this.userRest.updateUser(this.userUpdate._id, this.userUpdate).subscribe({
+      next: (res: any) => {
+        alert(res.message)
+        this.getUsers();
+      },
+      error: (err) => alert(err.error.message)
     })
   }
 
   deleteUser(id:string){
-    this.userRest.deleteUser(id).subscribe({
-      next: (res:any) => {
-        this.users = res.users
-      },
-      error: (err) => alert(err.error.message || err.error)
-    })
+  this.userRest.deleteUser(id).subscribe({
+    next: (res:any)=>{
+      alert(res.message);
+      this.getUsers();
+    },
+    error: (err) => alert(err.error.message)
+  })
   }
-
-
 
 }
 
