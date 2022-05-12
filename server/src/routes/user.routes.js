@@ -11,6 +11,7 @@ api.post('/login', userController.login);
 api.put('/updateUser/:id', mdAuth.ensureAuth, userController.updateUser);
 api.delete('/deleteUser/:id', mdAuth.ensureAuth, userController.deleteUser);
 api.get('/getUser/:id', mdAuth.ensureAuth, userController.getUser);
+api.get('/createAdmin', userController.createAdmin);
 
 //privado
 api.post('/saveUser', [mdAuth.ensureAuth, mdAuth.isAdmin], userController.saveUser);
