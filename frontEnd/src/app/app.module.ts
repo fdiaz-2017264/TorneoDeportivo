@@ -16,6 +16,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { LeagueDescriptionComponent } from './components/league-description/league-description.component';
 import { UsersComponent } from './components/users/users.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { UserRestService } from './services/userRest/user-rest.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,9 @@ import { ProfileComponent } from './components/profile/profile.component';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    UserRestService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

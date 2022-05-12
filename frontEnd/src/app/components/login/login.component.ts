@@ -22,11 +22,11 @@ export class LoginComponent implements OnInit {
 
   login(loginForm:any){
     this.userRest.login(this.user).subscribe({
-      next:(response:any)=>{
-        alert(response.message)
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('identity', JSON.stringify(response.alreadyUse));
-        return this.router.navigateByUrl('/');
+      next:(res:any)=>{
+        alert(res.message)
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('identity', JSON.stringify(res.alreadyUse));
+        this.router.navigateByUrl('/');
       },
       error: (err)=>{
         loginForm.reset();

@@ -1,48 +1,90 @@
 <app-nav-bar></app-nav-bar>
 <div class="vh-100">
     <div>
-        <div class="m-4 ">
+        <div class="m-4 text-center">
             <h1>Users</h1>
         </div>
         <div class="dropdown-divider"></div>
+        <div class="m-4">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Agregar
+          </button>
+        </div>
         
-        <div class="m-4 text-center">
+        <div class="m-4 text-center" >
             <table class="table table-dark table-striped" >
                 <thead>
                   <tr>
-                    <th scope="col">No.</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Usuario</th>
+                    <th scope="col">Email</th>
                     <th scope="col">Role</th>
                     <th scope="col">Acción</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>Admin</td>
-                    <td><a type="submit" class="btn btn-link">Ver</a><a type="submit" class="btn btn-warning">Eliminar</a></td>
+                  <tr *ngFor="let user of users">
+                    <td>{{user.name}}</td>
+                    <td>{{user.username}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.role}}</td>
+                    <td><a type="submit" class="btn btn-link">Ver</a>
+                        <a type="submit" class="btn btn-warning">Eliminar</a></td>
                   </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>Empleado</td>
-                    <td><a type="submit" class="btn btn-link">Ver</a><a type="submit" class="btn btn-warning">Eliminar</a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>Cliente</td>
-                    <td><a type="submit" class="btn btn-link">Ver</a><a type="submit" class="btn btn-warning">Eliminar</a></td>
-                  </tr>
+                  
                 </tbody>
               </table>
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">| Usuario Nuevo |</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+          <form #userForm="ngForm">
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Nombre</label>
+                <input [(ngModel)]="user.name"  name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Usuario</label>
+                <input [(ngModel)]="user.username"  name="username" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email</label>
+                <input [(ngModel)]="user.email"  name="email" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Contraseña</label>
+                <input [(ngModel)]="user.password" name="password" type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              </div>
+              <div class="mb-3">
+                  <label class="form-label">Role</label>
+                  <select  name="category" class="form-select" aria-label="Default select example">
+                      <option  value="ADMIN">ADMIN</option>
+                      <option  value="CLIENT">CLIENT</option>
+                  </select>
+              </div>
+            </form>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button (click)="saveUser(userForm)" type="submit" class="btn btn-primary"
+              data-bs-dismiss="modal">Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+   </div>
 
 <app-footer></app-footer>

@@ -18,7 +18,7 @@ const routes: Routes = [
   {path: 'users', component: UsersComponent},
   {path: 'league', component: LeaguesComponent},
   {path: 'leagueDescription', component: LeagueDescriptionComponent},
-  {path: 'profile', component: ProfileComponent},
+  {path: 'profile/:id', component: ProfileComponent},
   {path: '**', component: NotFoundComponent}
 ];
 

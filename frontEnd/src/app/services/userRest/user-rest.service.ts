@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class UserRestService {
-  HttpOptions = new HttpHeaders().set('Content-Type', 'application/json');
+  HttpOptions = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.getToken());
 
   constructor(private http: HttpClient) { }
 
@@ -16,6 +16,22 @@ export class UserRestService {
 
   login(params:{}){
     return this.http.post(environment.baseUrl + 'user/login', params, {headers: this.HttpOptions});
+  }
+
+  getUser(id:string){
+    return this.http.get(environment + 'user/getUser/'+ id, {headers: this.HttpOptions})
+  }
+
+  getUsers(){
+    return this.http.get(environment.baseUrl + 'user/getUsers', {headers: this.HttpOptions});
+  }
+
+  deleteUser(id: string){
+    return this.http.delete(environment.baseUrl + 'user/deleteuser' + id, {headers: this.HttpOptions});
+  }
+
+  saveUser(params:{}){
+    return this.http.post(environment.baseUrl + 'user/saveUser', params, {headers: this.HttpOptions});
   }
 
   getToken(){

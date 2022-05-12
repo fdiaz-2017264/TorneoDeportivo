@@ -24,7 +24,7 @@ exports.userRegister = async (req, res) => {
         if(msg) return res.status(400).send(msg);
         let already = await searchUser(data.username);
         if(already) return res.status(400).send({message: 'Username already in use'});
-        data.email = params.data;
+        data.email = params.email;
         data.password = await encrypt(params.password);
         let user = new User(data)
         await user.save();
@@ -44,13 +44,14 @@ exports.login = async(req, res)=>{
            password: params.password
        }
        let msg = validateData(data);
+
        if(msg) return res.status(400).send(msg)
        let alreadyUse = await searchUser(data.username);
        if(alreadyUse && await checkPass(data.password,alreadyUse.password)){
             let token = await jwt.createToken(alreadyUse);
             delete alreadyUse.password;
 
-            return res.send({ token, message: 'Login successfuly, Welcome!', alreadyUse})
+            return res.send({token, message: 'Login successfuly, Welcome!', alreadyUse})
        }else return res.status(401).send({message: 'Username or Password incorrect'});
     } catch(err){
         console.log(err);
