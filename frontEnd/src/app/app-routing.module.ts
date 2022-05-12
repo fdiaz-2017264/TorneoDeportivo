@@ -9,16 +9,19 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
 import { TournamentsComponent } from './components/tournaments/tournaments.component';
 import { UsersComponent } from './components/users/users.component';
+import { AdminGuard } from './guards/admin.guard';
+import { UserGuard } from './guards/user.guard';
 
 const routes: Routes = [
-  {path: '', component: HomeComponentComponent},
+  {path: '', canActivate: [UserGuard], component: HomeComponentComponent},
+  {path: 'home', canActivate: [UserGuard], component: HomeComponentComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'tournaments', component: TournamentsComponent},
-  {path: 'users', component: UsersComponent},
-  {path: 'league', component: LeaguesComponent},
-  {path: 'leagueDescription', component: LeagueDescriptionComponent},
-  {path: 'profile/:id', component: ProfileComponent},
+  {path: 'tournaments', canActivate: [UserGuard], component: TournamentsComponent},
+  {path: 'users', canActivate: [UserGuard, AdminGuard], component: UsersComponent},
+  {path: 'league', canActivate: [UserGuard], component: LeaguesComponent},
+  {path: 'leagueDescription', canActivate: [UserGuard], component: LeagueDescriptionComponent},
+  {path: 'profile/:id', canActivate: [UserGuard], component: ProfileComponent},
   {path: '**', component: NotFoundComponent}
 ];
 
