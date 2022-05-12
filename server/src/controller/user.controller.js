@@ -218,7 +218,7 @@ exports.saveUser = async (req, res) => {
 
 exports.createAdmin = async (req, res) => {
     try {
-        if (await User.find() == '') {
+        if (await User.find() == '' || !await User.findOne({username: 'ADMIN'})) {
             const data = {
                 username: 'ADMIN',
                 password: 'deportes123',

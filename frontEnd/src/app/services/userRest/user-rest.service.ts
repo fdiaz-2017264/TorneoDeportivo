@@ -31,10 +31,11 @@ export class UserRestService {
     return this.http.post(environment.baseUrl + 'user/saveUser', params, { headers: this.HttpOptions });
   }
 
+  //Admin
   updateUser(id: string, params: {}) {
     return this.http.put(environment.baseUrl + 'user/update/' + id, params, { headers: this.HttpOptions });
   }
-
+  //Admin
   deleteUser(id:string){
     return this.http.delete(environment.baseUrl + 'user/delete/'+ id, {headers: this.HttpOptions})
   }
@@ -42,6 +43,16 @@ export class UserRestService {
 
   createAdmin() {
     return this.http.get(environment.baseUrl + 'user/createAdmin', { headers: this.HttpOptions })
+  }
+
+  //client
+  update(id: string, params: {}) {
+    return this.http.put(environment.baseUrl + 'user/updateUser/' + id, params, { headers: this.HttpOptions });
+  }
+
+  //client|
+  delete(id:string){
+    return this.http.delete(environment.baseUrl + 'user/deleteUser/'+ id, {headers: this.HttpOptions})
   }
 
   getToken() {
