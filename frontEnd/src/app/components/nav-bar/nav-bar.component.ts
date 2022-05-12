@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserRestService } from 'src/app/services/userRest/user-rest.service';
 
 @Component({
@@ -10,7 +11,8 @@ export class NavBarComponent implements OnInit {
   token:any;
   identity:any;
   constructor(
-    private userRest: UserRestService
+    private userRest: UserRestService,
+    public router: Router
   ) { }
 
   ngOnInit(): void {
@@ -18,5 +20,9 @@ export class NavBarComponent implements OnInit {
     this.identity = this.userRest.getIdentity().role == 'CLIENT';
   }
 
-
+  logOut(){
+    localStorage.removeItem('token')
+    localStorage.removeItem('identity')
+    this.router.navigateByUrl('/login')
+  }
 }
