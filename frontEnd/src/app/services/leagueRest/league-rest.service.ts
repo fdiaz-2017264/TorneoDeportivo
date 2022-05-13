@@ -8,10 +8,7 @@ import { UserRestService } from '../userRest/user-rest.service';
   providedIn: 'root'
 })
 export class LeagueRestService {
-  httpOptions = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': this.userRest.getToken()
-  })
+  httpOptions = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userRest.getToken()).set('Access-Control-Allow-Origin', 'localhost:4200');
   
   constructor(
     private http: HttpClient,

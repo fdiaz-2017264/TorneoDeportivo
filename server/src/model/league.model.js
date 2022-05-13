@@ -14,7 +14,8 @@ const leagueSchema = mongoose.Schema({
             results2: Number
         }
     ],
-    user: { type: mongoose.Schema.ObjectId, ref: 'User' }
+    user: { type: mongoose.Schema.ObjectId, ref: 'User' },
+    tournament: {type: mongoose.Schema.ObjectId, ref: 'Tournament'}
 });
 
 module.exports = mongoose.model('League', leagueSchema);

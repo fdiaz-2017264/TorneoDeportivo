@@ -3,7 +3,7 @@
 <div>
   <div>
     <div class="m-4 text-center">
-      <h1>Ligas</h1>
+      <h1>Ligas: {{idTour}}</h1>
     </div>
     <div class="dropdown-divider"></div>
     <div class="text-center">
@@ -13,13 +13,14 @@
       <div *ngFor="let leag of leagues" class="card m-4 text-center" style="width: 15rem;">
         <div class="card-body">
           <h5 class="card-title">{{leag.name}}</h5>
+          <div class="dropdown-divider"></div>
           <h6 class="card-subtitle mb-2 text-muted">{{leag.description}}</h6>
           <button class="btn btn-warning m-2" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
             aria-controls="offcanvasExample" (click)="getLeague(leag._id)">
             Actualizar
           </button>
           <button class="btn btn-danger" (click)="deleteLeague(leag._id)">Eliminar</button>
-          <button class="btn btn-secondary ms-2">Ver</button>
+          <button class="btn btn-secondary ms-2" [routerLink]="['/leagueDescription/'+leag._id]">Ver</button>
         </div>
       </div>
     </div>

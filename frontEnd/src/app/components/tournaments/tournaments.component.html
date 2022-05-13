@@ -20,7 +20,7 @@
             Actualizar
           </button>
           <button class="btn btn-danger" (click)="deleteTour(tou._id)">Eliminar</button>
-          <button class="btn btn-secondary ms-2">Ver</button>
+          <button class="btn btn-secondary ms-2" [routerLink]="['/league/' + tou._id]">Ver</button>
         </div>
       </div>
     </div>

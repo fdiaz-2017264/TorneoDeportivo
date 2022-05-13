@@ -5,6 +5,7 @@ export class LeagueModel{
         public description: string,
         public teams: string,
         public score: number,
-        public user: string
+        public user: string,
+        public tournament: string,
     ){}
 }

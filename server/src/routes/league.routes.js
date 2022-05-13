@@ -13,4 +13,5 @@ api.put('/createScore/:id', mdAuth.ensureAuth, leagueController.createScore);
 api.get('/getLeague/:id', mdAuth.ensureAuth, leagueController.getLeague);
 api.get('/getLeagues', mdAuth.ensureAuth, leagueController.getLeagues);
 
+
 module.exports = api;

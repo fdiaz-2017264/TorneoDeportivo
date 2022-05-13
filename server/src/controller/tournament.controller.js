@@ -3,6 +3,7 @@
 const validate = require('../utils/validate');
 const Tournament = require('../model/tournament.model');
 const League = require('../model/league.model');
+const leagueController = require('./league.controller')
 
 exports.testTour = (req, res) =>{
     return res.send({message: 'Si funciona'})

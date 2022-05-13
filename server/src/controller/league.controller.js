@@ -2,6 +2,7 @@
 
 const League = require('../model/league.model');
 const {validateData, ownAccount} = require('../utils/validate');
+const Tournament = require('../model/tournament.model')
 
 exports.testLeague = (req, res)=>{
     res.send({message: 'Si funciona :)'});
@@ -13,14 +14,17 @@ exports.saveLeague = async (req, res)=>{
         const data = {
             name: params.name,
             description: params.description,
-            user: req.user.sub
+            user: req.user.sub,
+            
         }
         const league = await League.findOne({name: params.name});
         if(league) return res.status(500).send({message: 'League already exist'});
         const msg = validateData(data);
         if(!msg){
+            data.tournament = params.tournament
             const league = new League(data);
             await league.save();
+            
             return res.send({message: 'League saved'});
         }else return res.status(400).send(msg);
     }catch(err){
