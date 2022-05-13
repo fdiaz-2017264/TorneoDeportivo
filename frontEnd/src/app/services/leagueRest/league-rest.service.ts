@@ -27,7 +27,7 @@ export class LeagueRestService {
   }
 
   updateLeague(id: string, params:{}){
-    return this.http.put(environment.baseUrl + 'league/updateLeague/' + id, params, {headers: this.httpOptions});
+    return this.http.put(environment.baseUrl + 'league/updatedLeague/' + id, params, {headers: this.httpOptions});
   }
 
   deleteLeague(id: string){
