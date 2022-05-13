@@ -86,3 +86,29 @@ exports.createScore = async (req, res) => {
         return res.status(500).send({ message: 'Score not saved' });
     }
 }
+
+exports.getLeague = async (req, res)=>{
+    try{
+        const leagueId = req.params.id;
+        const league = await League.findOne({_id: leagueId});
+        if(!league){
+            return res.send({message: 'No data for this league'});
+        }else{
+            return res.send({message: 'League found', league});
+        }
+
+    }catch(err){
+        console.log(err);
+        return res.status(500).send({message: 'Search error'});
+    }
+}
+
+exports.getLeagues = async(req, res)=>{
+    try{
+        const leagues = await League.find();
+        return res.send({message: 'Leagues found', leagues});
+    }catch(err){
+        console.log(err);
+        return res.status(500).send({message: 'Search error'})
+    }
+}
