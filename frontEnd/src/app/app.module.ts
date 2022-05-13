@@ -17,6 +17,7 @@ import { LeagueDescriptionComponent } from './components/league-description/leag
 import { UsersComponent } from './components/users/users.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { UserRestService } from './services/userRest/user-rest.service';
+import { SearchPipe } from './pipes/search.pipe';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { UserRestService } from './services/userRest/user-rest.service';
     FooterComponent,
     LeagueDescriptionComponent,
     UsersComponent,
-    ProfileComponent
+    ProfileComponent,
+    SearchPipe
   ],
   imports: [
     BrowserModule,

@@ -3,14 +3,14 @@
 <div>
   <div>
     <div class="m-4 text-center">
-      <h1>Ligas: {{idTour}}</h1>
+      <h1>Ligas</h1>
     </div>
     <div class="dropdown-divider"></div>
     <div class="text-center">
       <button class="btn btn-success m-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Agregar</button>
     </div>
     <div class="row m-5">
-      <div *ngFor="let leag of leagues" class="card m-4 text-center" style="width: 15rem;">
+      <div *ngFor="let leag of leagues | search:idTour" class="card m-4 text-center" style="width: 15rem;">
         <div class="card-body">
           <h5 class="card-title">{{leag.name}}</h5>
           <div class="dropdown-divider"></div>

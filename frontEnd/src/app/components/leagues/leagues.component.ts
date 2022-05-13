@@ -12,7 +12,6 @@ export class LeaguesComponent implements OnInit {
   leagues: any;
   league: LeagueModel;
   leagueUpdate: any;
-  search: any;
   idTour: any;
 
 
@@ -24,20 +23,24 @@ export class LeaguesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getLeagues();
     this.activatedRoute.paramMap.subscribe((idT: any) => {
       this.idTour = idT.get('idT');
     })
+    this.getLeagues();
+
   }
 
   getLeagues() {
     this.leagueRest.getLeagues().subscribe({
       next: (res: any) => {
-        this.leagues = res.leagues
+          this.leagues = res.leagues
       },
       error: (err) => alert(err.error.message)
     })
+
   }
+
+
 
   getLeague(id: string) {
     this.leagueRest.getLeague(id).subscribe({
