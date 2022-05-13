@@ -57,7 +57,6 @@ export class LeaguesComponent implements OnInit {
         this.getLeagues();
       },
       error: (err) => {
-        console.log('Que asco')
         alert(err.error.message || err.error)
       }
     })
