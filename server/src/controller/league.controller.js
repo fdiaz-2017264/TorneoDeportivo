@@ -19,7 +19,6 @@ exports.saveLeague = async (req, res)=>{
         if(league) return res.status(500).send({message: 'League already exist'});
         const msg = validateData(data);
         if(!msg){
-            data.teams = params.teams;
             const league = new League(data);
             await league.save();
             return res.send({message: 'League saved'});
@@ -29,7 +28,7 @@ exports.saveLeague = async (req, res)=>{
         return err;
     }
 }
-
+/*
 exports.deleteLeague = async(req, res)=>{
     try{
         const leagueId = req.params.id;
@@ -44,7 +43,7 @@ exports.deleteLeague = async(req, res)=>{
         return err;
     }
 }
-
+*/
 exports.updatedLeague = async(req, res)=>{
     try{
         const leagueId = req.params.id;
@@ -110,5 +109,23 @@ exports.getLeagues = async(req, res)=>{
     }catch(err){
         console.log(err);
         return res.status(500).send({message: 'Search error'})
+    }
+}
+
+exports.deleteLeague = async (req, res) => {
+    try {
+
+        const leagueId = req.params.id;
+        const searchLeague = await League.findOne({ _id: leagueId })
+
+        if (!searchLeague) return res.send({ message: 'Action not allowed' });
+        
+        const leagueDeleted = await League.findOneAndDelete({ _id: leagueId });
+
+        if (!leagueDeleted) return res.send({ message: 'Action not allowed' });
+        return res.send({ leagueDeleted, message: 'League deleted Successfully!', })
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ message: 'Delete error' });
     }
 }
