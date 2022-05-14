@@ -13,8 +13,8 @@ export class LeagueDescriptionComponent implements OnInit {
   teams: any
   teamUpdate: any
   idLeague: any
-  view: any = [700, 400];
-  points: [{name: string,value: number}]
+  view: any = [800, 500];
+  points: any
 
   constructor(
     private teamRest: TeamRestService,
