@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const equipoSchema = mongoose.Schema({
     name: String,
-    points: Number,
+    value: Number,
     goals: Number,
     user: { type: mongoose.Schema.ObjectId, ref: 'User' },
     league: {type: mongoose.Schema.ObjectId, ref: 'League'}

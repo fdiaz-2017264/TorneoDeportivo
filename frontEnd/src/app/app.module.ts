@@ -19,6 +19,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { UserRestService } from './services/userRest/user-rest.service';
 import { SearchPipe } from './pipes/search.pipe';
 import { TeamSearchPipe } from './pipes/team-search.pipe';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { TeamSearchPipe } from './pipes/team-search.pipe';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxChartsModule
   ],
   providers: [
     UserRestService

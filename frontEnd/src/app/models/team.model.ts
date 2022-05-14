@@ -3,7 +3,7 @@ export class TeamModel {
         public id: string,
         public name: string,
         public goals: number,
-        public points: number,
+        public value: number,
         public league: string
     ) { }
 }

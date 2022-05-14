@@ -14,7 +14,7 @@ exports.saveEquipos = async(req, res) =>{
     if(msg) return res.status(400).send(msg); 
     const alreadyName = await Equipos.findOne({name: params.name});
     if(alreadyName) return res.send({message: 'Ya se creo el equipo'}); 
-    data.points = params.points;
+    data.value = params.value;
     data.goals = params.goals
     data.league = params.league;
     const equipos = new Equipos(data);
@@ -60,7 +60,8 @@ exports.equiposUpdate = async(req,res)=>{
 exports.getEquipos = async(req, res)=>{
     try{
         const teams = await Equipos.find();
-        return res.send({message: 'Teams found', teams});
+        const points = await Equipos.find({}, '-_id name value');
+        return res.send({message: 'Teams found', teams,message: 'puntos: ', points});
     }catch(err){
         console.log(err);
         return res.status(500).send({message: 'Search error'})

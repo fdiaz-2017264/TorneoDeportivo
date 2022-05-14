@@ -13,6 +13,8 @@ export class LeagueDescriptionComponent implements OnInit {
   teams: any
   teamUpdate: any
   idLeague: any
+  view: any = [700, 400];
+  points: [{name: string,value: number}]
 
   constructor(
     private teamRest: TeamRestService,
@@ -20,6 +22,7 @@ export class LeagueDescriptionComponent implements OnInit {
 
   ) {
     this.team = new TeamModel('', '', 0, 0, '');
+    this.points = ([{name:'', value: 0}])
   }
 
   ngOnInit(): void {
@@ -27,6 +30,15 @@ export class LeagueDescriptionComponent implements OnInit {
       this.idLeague = idL.get('idL');
     })
     this.getTeams()
+  }
+
+  getPoints(){
+    this.teamRest.getTeams().subscribe({
+      next: (res: any) => {
+          this.points = res.points
+      },
+      error: (err) => alert(err.error.message)
+    })
   }
 
   getTeams() {
@@ -77,5 +89,19 @@ export class LeagueDescriptionComponent implements OnInit {
       },
       error: (err) => alert(err.error.message || err.error)
     })
+  }
+
+  /* Graficas*/
+  
+  onSelect(data:any): void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  }
+
+  onActivate(data:any): void {
+    console.log('Activate', JSON.parse(JSON.stringify(data)));
+  }
+
+  onDeactivate(data:any): void {
+    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 }
