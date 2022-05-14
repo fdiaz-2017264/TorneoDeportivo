@@ -9,6 +9,7 @@ const userRoutes = require('../src/routes/user.routes');
 const tournamentRoutes = require('../src/routes/tournament.routes');
 const leagueRoutes = require('../src/routes/league.routes');
 const teamRoutes = require('../src/routes/team.routes');
+const scoreRoutes = require('../src/routes/scores.routes')
 
 
 const app = express(); 
@@ -21,7 +22,8 @@ app.use(cors());
 app.use('/user', userRoutes);
 app.use('/tour', tournamentRoutes);
 app.use('/league', leagueRoutes);
-app.use('/team', teamRoutes)
+app.use('/team', teamRoutes);
+app.use('/score', scoreRoutes);
 
 
 

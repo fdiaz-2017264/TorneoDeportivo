@@ -11,6 +11,7 @@ import { UserRestService } from 'src/app/services/userRest/user-rest.service';
 export class HomeComponentComponent implements OnInit {
   view: any = [800, 500];
   points: any
+  scores:any
 
   constructor(
     private teamRest:TeamRestService
@@ -23,6 +24,15 @@ export class HomeComponentComponent implements OnInit {
     this.teamRest.getTeams().subscribe({
       next: (res: any) => {
           this.points = res.points
+      },
+      error: (err) => alert(err.error.message)
+    })
+  }
+  
+  getScores() {
+    this.teamRest.getScores().subscribe({
+      next: (res: any) => {
+        this.scores = res.score
       },
       error: (err) => alert(err.error.message)
     })

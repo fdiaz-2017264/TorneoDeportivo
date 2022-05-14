@@ -34,4 +34,12 @@ export class TeamRestService {
   deleteTeam(id:string){
     return this.http.delete(environment.baseUrl + 'team/equiposDelete/'+id, {headers: this.HttpOptions});
   }
+
+  getScores(){
+    return this.http.get(environment.baseUrl + 'score/getScores', {headers: this.HttpOptions});
+  }
+
+  createScore(params:{}){
+    return this.http.post(environment.baseUrl + 'score/createScore', params, {headers: this.HttpOptions})
+  }
 }

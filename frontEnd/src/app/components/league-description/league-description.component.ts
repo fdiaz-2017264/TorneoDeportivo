@@ -3,6 +3,7 @@ import { TeamModel } from 'src/app/models/team.model';
 import { TeamRestService } from '../../services/teamRest/team-rest.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
+import { ScoreModel } from 'src/app/models/score.model';
 
 @Component({
   selector: 'app-league-description',
@@ -17,6 +18,8 @@ export class LeagueDescriptionComponent implements OnInit {
   view: any = [800, 500];
   points: any
   teamSize: any
+  scores: any
+  score: ScoreModel
 
   constructor(
     private teamRest: TeamRestService,
@@ -24,7 +27,8 @@ export class LeagueDescriptionComponent implements OnInit {
 
   ) {
     this.team = new TeamModel('', '', 0, 0, '');
-    this.points = ([{ name: '', value: 0 }])
+    this.points = ([{ name: '', value: 0 }]);
+    this.score = new ScoreModel('', 0, '', 0);
   }
 
   ngOnInit(): void {
@@ -52,20 +56,52 @@ export class LeagueDescriptionComponent implements OnInit {
     })
   }
 
+  getScores() {
+    this.teamRest.getScores().subscribe({
+      next: (res: any) => {
+        this.scores = res.score
+      },
+      error: (err) => alert(err.error.message)
+    })
+  }
+
   createTeam(teamForm: any) {
     this.team.league = this.idLeague;
     this.teamRest.createTeam(this.team).subscribe({
       next: (res: any) => {
         Swal.fire({
           position: 'top-end',
-          title: 'Liga',
+          title: 'Equipo guardado',
           icon: 'success',
-          text: 'Equipo guardado',
           showConfirmButton: false,
           timer: 900
         })
         this.getTeams();
         teamForm.reset();
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Hubo un error guardando',
+          showConfirmButton: false,
+          timer: 1000
+        })
+      }
+    })
+  }
+
+  createScore(){
+    this.teamRest.createScore(this.score).subscribe({
+      next: (res: any) => {
+        Swal.fire({
+          position: 'top-end',
+          title: 'Liga',
+          icon: 'success',
+          text: 'Marcador guardado',
+          showConfirmButton: false,
+          timer: 900
+        })
       },
       error: (err) => {
         Swal.fire({
@@ -113,7 +149,7 @@ export class LeagueDescriptionComponent implements OnInit {
       next: (res: any) => {
         Swal.fire({
           position: 'top',
-          title: 'Eliminado',
+          title: res.message,
           icon: 'success',
           showConfirmButton: false,
           timer: 900
