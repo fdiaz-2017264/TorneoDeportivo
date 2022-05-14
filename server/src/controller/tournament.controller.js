@@ -40,6 +40,7 @@ exports.createTournament = async(req, res) =>{
 exports.deleteTournament = async(req, res)=>{
     try {
         const tournamentId = req.params.id;
+        const tour = await Tournament.findOne({_id: tournamentId}).lean();
         const tourDelete = await Tournament.findOneAndDelete({_id: tournamentId})
         
         if(!tourDelete) return res.send({message: 'Tournament not found or already deleted'});

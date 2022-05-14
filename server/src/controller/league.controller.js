@@ -53,6 +53,7 @@ exports.updatedLeague = async(req, res)=>{
         const leagueId = req.params.id;
         const params = req.body;
         const league = await League.findOne({_id: leagueId}).lean();
+        if(league.user != req.user.sub) return res.send({message: 'User unauthorized'})
         const account = await ownAccount(league.user, req.user.sub);
         if(account ) return res.send(account)
         const leagueUpdated = await League.findOneAndUpdate({_id: leagueId}, params, {new: true});
@@ -121,9 +122,8 @@ exports.deleteLeague = async (req, res) => {
     try {
 
         const leagueId = req.params.id;
-        const searchLeague = await League.findOne({ _id: leagueId })
-
-        if (!searchLeague) return res.send({ message: 'Action not allowed' });
+        const searchLeague = await League.findOne({ _id: leagueId }).lean()
+        if (searchLeague.user != req.user.sub) return res.send({ message: 'Action not allowed' });
         
         const leagueDeleted = await League.findOneAndDelete({ _id: leagueId });
 

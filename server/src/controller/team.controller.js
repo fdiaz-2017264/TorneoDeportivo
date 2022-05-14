@@ -16,12 +16,13 @@ exports.saveEquipos = async(req, res) =>{
     if(alreadyName) return res.send({message: 'Ya se creo el equipo'}); 
     data.points = params.points;
     data.goals = params.goals
+    data.league = params.league;
     const equipos = new Equipos(data);
     await equipos.save(); 
     return res.send({message: 'Equipo Creado'})
     }catch(err){
         console.log(err);
-        return res.status(500).send({message: 'Error saving Equipo'})
+        return res.status(500).send({err, message: 'Error saving Equipo'})
     }
 }
 
@@ -29,8 +30,7 @@ exports.equiposDelete = async(req,res)=>{
     try{
         const equipoId = req.params.id;
         const team = await Equipos.findOne({_id: equipoId}).lean();
-        const account = await validate.ownAccount(team.user, req.user.sub);
-        if(account ) return res.send(account) 
+        if(team.user != req.user.sub) return res.send({message: 'User unauthorized'})
         const delEquipos = await Equipos.findOneAndDelete({_id: equipoId}); 
         if(!delEquipos) return res.status(404).send({message: 'Equipos not found or already deleted'}); 
         return res.send({message: 'Equipos Deleted', delEquipos});
@@ -46,8 +46,7 @@ exports.equiposUpdate = async(req,res)=>{
         const params = req.body; 
         const equiposId = req.params.id; 
         const team = await Equipos.findOne({_id: equiposId}).lean();
-        const account = await validate.ownAccount(team.user, req.user.sub);
-        if(account ) return res.send(account) 
+        if(team.user != req.user.sub) return res.send({message: 'User unauthorized'})
         const check = validate.checkUpdate(params);
         if(check === false) return res.status(400).send('data is not recivida'); 
         const equiposUpdate = await Equipos.findOneAndUpdate({_id: equiposId}, params, {new: true});
@@ -58,13 +57,24 @@ exports.equiposUpdate = async(req,res)=>{
     }
 }
 
-exports.getEquipos = async(req,res) =>{
+exports.getEquipos = async(req, res)=>{
     try{
-        const equipo = await Equipos.find();
-        return res.send(equipo);
+        const teams = await Equipos.find();
+        return res.send({message: 'Teams found', teams});
     }catch(err){
         console.log(err);
-        return res.status(500).send({err, message: 'Error deleting'});
+        return res.status(500).send({message: 'Search error'})
     }
+}
 
+exports.getTeam = async (req, res) =>{
+    try {
+        const teamId = req.params.id;
+        const team = await Equipos.findOne({_id: teamId});
+        if(!team) return res.send({message: 'Team not found'});
+            return res.send({message: 'Team found:', team});
+     } catch (err) {
+        console.log(err);
+        return res.status(500).send({err, message: 'Error getting teams'});
+     }
 }

@@ -18,6 +18,7 @@ import { UsersComponent } from './components/users/users.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { UserRestService } from './services/userRest/user-rest.service';
 import { SearchPipe } from './pipes/search.pipe';
+import { TeamSearchPipe } from './pipes/team-search.pipe';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { SearchPipe } from './pipes/search.pipe';
     LeagueDescriptionComponent,
     UsersComponent,
     ProfileComponent,
-    SearchPipe
+    SearchPipe,
+    TeamSearchPipe
   ],
   imports: [
     BrowserModule,

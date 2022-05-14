@@ -6,7 +6,8 @@ const equipoSchema = mongoose.Schema({
     name: String,
     points: Number,
     goals: Number,
-    user: { type: mongoose.Schema.ObjectId, ref: 'User' }
+    user: { type: mongoose.Schema.ObjectId, ref: 'User' },
+    league: {type: mongoose.Schema.ObjectId, ref: 'League'}
 });
 
 module.exports = mongoose.model('Equipos',equipoSchema);
