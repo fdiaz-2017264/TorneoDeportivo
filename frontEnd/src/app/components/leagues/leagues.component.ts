@@ -58,7 +58,7 @@ export class LeaguesComponent implements OnInit {
           position: 'top-end',
           title: 'Liga',
           icon: 'success',
-          text: 'Liga guardada',
+          text: res.message,
           showConfirmButton: false,
           timer: 900
         })
@@ -82,7 +82,7 @@ export class LeaguesComponent implements OnInit {
       next: (res: any) => {
         Swal.fire({
           position: 'top-end',
-          title: 'Liga Actualizada',
+          title: res.message,
           icon: 'success',
           showConfirmButton: false,
           timer: 1000
@@ -106,7 +106,7 @@ export class LeaguesComponent implements OnInit {
       next: (res: any) => {
         Swal.fire({
           position: 'top',
-          title: 'Eliminado',
+          title: res.message,
           icon: 'success',
           showConfirmButton: false,
           timer: 900

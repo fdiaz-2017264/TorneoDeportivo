@@ -34,8 +34,9 @@ export class TournamentsComponent implements OnInit {
       next: (res: any) => {
         Swal.fire({
           position: 'top-end',
-          title: 'Torneo guardado',
+          title: 'Torneo',
           icon: 'success',
+          text: res.message,
           showConfirmButton: false,
           timer: 900
         })
@@ -81,7 +82,7 @@ export class TournamentsComponent implements OnInit {
       next: (res: any) => {
         Swal.fire({
           position: 'top-end',
-          title: 'Torneo Actualizado',
+          title: res.message,
           icon: 'success',
           showConfirmButton: false,
           timer: 1000
@@ -105,7 +106,7 @@ export class TournamentsComponent implements OnInit {
       next: (res: any) => {
         Swal.fire({
           position: 'top',
-          title: 'Eliminado',
+          title: res.message,
           icon: 'success',
           showConfirmButton: false,
           timer: 900

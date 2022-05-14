@@ -39,11 +39,12 @@ export class UsersComponent implements OnInit {
 
   saveUser(userForm: any) {
     this.userRest.saveUser(this.user).subscribe({
-      next: (response: any) => {
+      next: (res: any) => {
         Swal.fire({
           position: 'top-end',
-          title: 'Cuenta creada',
+          title: 'Usuario',
           icon: 'success',
+          text: res.message,
           showConfirmButton: false,
           timer: 1000
         })
@@ -77,7 +78,7 @@ export class UsersComponent implements OnInit {
       next: (res: any) => {
         Swal.fire({
           position: 'top-end',
-          title: 'Cuenta Actualizada',
+          title: res.message,
           icon: 'success',
           showConfirmButton: false,
           timer: 1000
@@ -99,7 +100,7 @@ export class UsersComponent implements OnInit {
     next: (res:any)=>{
       Swal.fire({
         position: 'top',
-        title: 'Eliminado',
+        title: res.message,
         icon: 'success',
         showConfirmButton: false,
         timer: 900

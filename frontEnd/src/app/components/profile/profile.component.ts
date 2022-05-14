@@ -38,7 +38,7 @@ export class ProfileComponent implements OnInit {
       next: (res: any) => {
         Swal.fire({
           position: 'top-end',
-          title: 'Cuenta Actualizada',
+          title: res.message,
           icon: 'success',
           showConfirmButton: false,
           timer: 1000
@@ -62,7 +62,7 @@ export class ProfileComponent implements OnInit {
         localStorage.removeItem('identity');
         Swal.fire({
           position: 'top',
-          title: 'Eliminado',
+          title: res.message,
           icon: 'success',
           showConfirmButton: false,
           timer: 900

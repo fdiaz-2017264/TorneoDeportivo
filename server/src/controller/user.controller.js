@@ -22,12 +22,12 @@ exports.userRegister = async (req, res) => {
         let msg = validateData(data);
         if (msg) return res.status(400).send(msg);
         let already = await searchUser(data.username);
-        if (already) return res.status(400).send({ message: 'Username already in use' });
+        if (already) return res.status(400).send({ message: 'Usuario en uso' });
         data.email = params.email;
         data.password = await encrypt(params.password);
         let user = new User(data)
         await user.save();
-        return res.send({ message: 'User created' });
+        return res.send({ message: 'Usuario creado' });
     } catch (err) {
         console.log(err);
         return res.status(500).send({ err, message: 'Error saving User' })
@@ -50,8 +50,8 @@ exports.login = async (req, res) => {
             let token = await jwt.createToken(alreadyUse);
             delete alreadyUse.password;
 
-            return res.send({ token, message: 'Login successfuly, Welcome!', alreadyUse })
-        } else return res.status(401).send({ message: 'Username or Password incorrect' });
+            return res.send({ token, message: 'Bienvenido!', alreadyUse })
+        } else return res.status(401).send({ message: 'Usuario o contraseña incorrectos' });
     } catch (err) {
         console.log(err);
         return res.status(500).send({ err, message: 'Failed to login' });
@@ -65,12 +65,12 @@ exports.deleteUser = async (req, res) => {
         const access = await checkPermission(userId, req.user.sub);
 
         if (access == false)
-            return res.status(403).send({ message: 'Action Denied, you can not delete this user' });
+            return res.status(403).send({ message: 'Usuairo no autorizado' });
         const deletedUser = await User.findOneAndDelete({ _id: userId });
         if (deletedUser) {
-            return res.send({ deletedUser, message: 'User deleted successfully!' })
+            return res.send({ deletedUser, message: 'Usuario eliminado' })
         } else {
-            res.send({ message: 'We could not find this user, please check if the user exists' })
+            res.send({ message: 'Usuario no encontrado' })
         }
     } catch (err) {
         console.log(err);
@@ -87,25 +87,25 @@ exports.updateUser = async (req, res) => {
 
         const userExist = await User.findOne({ _id: userId })
         if (!userExist)
-            return res.send({ message: 'We could not find the user, please try again' })
+            return res.send({ message: 'Usuario no encontrado' })
 
         const access = await checkPermission(userId, req.user.sub);
         if (access === false)
-            return res.status(401).send({ message: 'Action Denegated, you can not update this user' })
+            return res.status(401).send({ message: 'Usuario no autorizado' })
 
         const validateUp = await checkUpdate(params);
         if (validateUp === false)
-            return res.status(400).send({ message: 'Action Denegated, invalid params or you dont have permission to update' });
+            return res.status(400).send({ message: 'Parametros invaldos o no tienes autorización' });
 
         let nameUsed = await searchUser(params.username);
         if (nameUsed && userExist.username != params.username)
-            return res.send({ message: 'Name in use, please choose another' });
+            return res.send({ message: 'Usuario en uso' });
 
         const updateUser = await User.findOneAndUpdate({ _id: userId }, params, { new: true }).lean();
         if (updateUser) {
-            res.send({ updateUser, message: 'User updated successfully!' });
+            res.send({ updateUser, message: 'Usuario actualizado' });
         } else {
-            return res.send({ message: 'User not updated, please try again' });
+            return res.send({ message: 'Usuario no actualizado' });
         }
 
     } catch (err) {
@@ -117,7 +117,7 @@ exports.updateUser = async (req, res) => {
 exports.getUsers = async (req, res) => {
     try {
         const users = await User.find();
-        return res.send({ message: 'Users found:', users })
+        return res.send({ message: 'Usuarios encontrados:', users })
 
     } catch (err) {
         console.log(err);
@@ -131,9 +131,9 @@ exports.getUser = async (req, res) => {
         const user = await User.findOne({ _id: userId })
 
         if (!user) {
-            return res.send({ message: 'No data for this user' });
+            return res.send({ message: 'Usuario no encontrado' });
         } else {
-            return res.send({ message: 'User found:', user });
+            return res.send({ message: 'Usuario encontrado:', user });
         }
     } catch (error) {
         console.log(err);
@@ -147,12 +147,12 @@ exports.delete = async (req, res) => {
         const userId = req.params.id;
         const searchUser = await User.findOne({ _id: userId })
 
-        if (!searchUser) return res.send({ message: 'Action not allowed' });
-        if (searchUser.role === 'ADMIN') return res.send({ message: 'Can not delete this user' });
+        if (!searchUser) return res.send({ message: 'Acción no autorizada' });
+        if (searchUser.role === 'ADMIN') return res.send({ message: 'Acción no autorizada' });
         const userDeleted = await User.findOneAndDelete({ _id: userId });
 
-        if (!userDeleted) return res.send({ message: 'Action not allowed' });
-        return res.send({ userDeleted, message: 'Account deleted Successfully!', })
+        if (!userDeleted) return res.send({ message: 'Acción no autorizada' });
+        return res.send({ userDeleted, message: 'Cuenta eliminada', })
     } catch (err) {
         console.log(err);
         return res.status(500).send({ message: 'Delete error' });
@@ -165,19 +165,19 @@ exports.update = async (req, res) => {
         const params = req.body;
 
         const searchU = await User.findOne({ _id: userId });
-        if (!searchU) return res.send({ message: 'User not found, try again' });
+        if (!searchU) return res.send({ message: 'Usuario no encontrado' });
         const emptyParams = await checkUpdateAdmin(params);
 
-        if (emptyParams === false) return res.send({ message: 'Empty params or params not updated, try again' });
-        if (searchU.role === 'ADMIN') return res.send({ message: 'Action not allowed' });
+        if (emptyParams === false) return res.send({ message: 'Parametros vacios o no se pudo actualizar' });
+        if (searchU.role === 'ADMIN') return res.send({ message: 'Acción no autorizada' });
 
         const nameUsed = await searchUser(params.username);
-        if (nameUsed && searchU.username != params.username) return res.send({ message: 'Username already taken, use another' });
-        if (params.role != 'ADMIN' && params.role != 'CLIENT') return res.status(400).send({ message: 'Invalid role' });
+        if (nameUsed && searchU.username != params.username) return res.send({ message: 'Usuario en uso, intente otro' });
+        if (params.role != 'ADMIN' && params.role != 'CLIENT') return res.status(400).send({ message: 'Insuficientes permisos' });
 
         const userUpdated = await User.findOneAndUpdate({ _id: userId }, params, { new: true });
-        if (!userUpdated) return res.send({ message: 'User not updated' });
-        return res.send({ userUpdated, message: 'User updated successfully' });
+        if (!userUpdated) return res.send({ message: 'Usuario no actualizado' });
+        return res.send({ userUpdated, message: 'Usuario actualizado' });
 
     } catch (err) {
         console.log(err);
@@ -200,16 +200,16 @@ exports.saveUser = async (req, res) => {
         const msg = validateData(data);
         if (msg) return res.status(400).send(msg);
         const userExist = await searchUser(params.username);
-        if (userExist) return res.send({ message: 'Username already in use, use another' });
+        if (userExist) return res.send({ message: 'Usuario en uso' });
 
-        if (params.role != 'ADMIN' && params.role != 'CLIENT') return res.status(400).send({ message: 'Invalid role' });
+        if (params.role != 'ADMIN' && params.role != 'CLIENT') return res.status(400).send({ message: 'Roll inválido' });
         data.surname = params.surname;
         data.phone = params.phone;
         data.password = await encrypt(params.password);
 
         const user = new User(data);
         await user.save();
-        return res.send({ message: 'User saved successfully!' });
+        return res.send({ message: 'Usuario guardado' });
     } catch (err) {
         console.log(err);
         return res.status(500).send({ err, message: 'Error saving user' });

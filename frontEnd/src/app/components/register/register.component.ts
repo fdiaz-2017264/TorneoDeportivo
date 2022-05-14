@@ -27,10 +27,10 @@ export class RegisterComponent implements OnInit {
 
   register(registerForm:any){
     this.userRest.register(this.user).subscribe({
-      next: (response:any)=>{
+      next: (res:any)=>{
         Swal.fire({
           position: 'top-end',
-          title: 'Cuenta creada',
+          title: res.message,
           icon: 'success',
           showConfirmButton: false,
           timer: 1000

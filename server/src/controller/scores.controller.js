@@ -32,7 +32,7 @@ exports.createScore = async (req, res) => {
         await Equipos.findOneAndUpdate({_id: params.team2}, dataT2, {new:true});
         const score = new Score(data);
         await score.save();
-        return res.send({message: 'marcador creado', score});
+        return res.send({message: 'Marcador creado', score});
     } catch (err) {
         console.log(err);
         return res.status(500).send({ message: 'Error saving' });
@@ -42,7 +42,7 @@ exports.createScore = async (req, res) => {
 exports.getScores = async (req,res) => {
     try{
         const score = await Score.find().lean().populate('team1').populate('team2');
-        return res.send({message: 'Scores found', score});
+        return res.send({message: 'Marcador encontrad', score});
     } catch (err) {
         console.log(err);
         return res.status(500).send({ message: 'Error searching' });
