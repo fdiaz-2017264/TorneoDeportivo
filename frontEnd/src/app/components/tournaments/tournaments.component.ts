@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TournamentModel } from 'src/app/models/tournament.model';
 import { TournamentRestService } from 'src/app/services/tournamentRest/tournament-rest.service';
 import { UserRestService } from 'src/app/services/userRest/user-rest.service'
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tournaments',
@@ -31,12 +32,24 @@ export class TournamentsComponent implements OnInit {
   createTour(tourForm: any) {
     this.tourRest.createTour(this.tour).subscribe({
       next: (res: any) => {
-        alert(res.message);
+        Swal.fire({
+          position: 'top-end',
+          title: 'Torneo guardado',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 900
+        })
         this.getTours();
       },
       error: (err) => {
         tourForm.reset();
-        return alert(err.error.message || err.error)
+        return Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Hubo un error guardando',
+          showConfirmButton: false,
+          timer: 1000
+        })
       }
     })
   }
@@ -66,11 +79,23 @@ export class TournamentsComponent implements OnInit {
   updateTour() {
     this.tourRest.updateTour(this.tourUpdate._id, this.tourUpdate).subscribe({
       next: (res: any) => {
-        alert(res.message);
+        Swal.fire({
+          position: 'top-end',
+          title: 'Torneo Actualizado',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1000
+        })
         this.getTours();
       },
       error: (err) => {
-        return alert(err.error.message || err.error)
+        return Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Hubo un error actualizando',
+          showConfirmButton: false,
+          timer: 1000
+        })
       }
     })
   }
@@ -78,11 +103,23 @@ export class TournamentsComponent implements OnInit {
   deleteTour(id: string) {
     this.tourRest.deleteTour(id).subscribe({
       next: (res: any) => {
-        alert(res.message);
+        Swal.fire({
+          position: 'top',
+          title: 'Eliminado',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 900
+        })
         this.getTours();
       },
       error: (err) => {
-        return alert(err.error.message)
+        return Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Hubo un error eliminando',
+          showConfirmButton: false,
+          timer: 1000
+        })
       }
     })
   }

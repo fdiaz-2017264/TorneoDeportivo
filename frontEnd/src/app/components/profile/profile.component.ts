@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserModel } from 'src/app/models/user.model';
 import { UserRestService } from 'src/app/services/userRest/user-rest.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
@@ -35,10 +36,22 @@ export class ProfileComponent implements OnInit {
     this.usUpdate.role = undefined;
     this.userRest.update(this.usUpdate._id, this.usUpdate).subscribe({
       next: (res: any) => {
-        alert(res.message)
+        Swal.fire({
+          position: 'top-end',
+          title: 'Cuenta Actualizada',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1000
+        })
         this.getUser();
       },
-      error: (err) => alert(err.error.message)
+      error: (err) => Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Hubo un actualizando la cuenta',
+        showConfirmButton: false,
+        timer: 1000
+      })
     })
   }
 
@@ -47,10 +60,22 @@ export class ProfileComponent implements OnInit {
       next: (res:any)=>{
         localStorage.removeItem('token');
         localStorage.removeItem('identity');
-        alert(res.message);
+        Swal.fire({
+          position: 'top',
+          title: 'Eliminado',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 900
+        })
         this.router.navigateByUrl('/login');
       },
-      error: (err) => alert(err.error.message)
+      error: (err) => Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Hubo un error eliminando',
+        showConfirmButton: false,
+        timer: 1000
+      })
     })
   }
 

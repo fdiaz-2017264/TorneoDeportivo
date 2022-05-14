@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserModel } from 'src/app/models/user.model';
 import { UserRestService } from 'src/app/services/userRest/user-rest.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-users',
@@ -39,13 +40,25 @@ export class UsersComponent implements OnInit {
   saveUser(userForm: any) {
     this.userRest.saveUser(this.user).subscribe({
       next: (response: any) => {
-        alert(response.message);
+        Swal.fire({
+          position: 'top-end',
+          title: 'Cuenta creada',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1000
+        })
         userForm.reset();
         this.getUsers();
       },
       error: (err) => {
         userForm.reset();
-        return alert(err.error.message || err.error)
+        return Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Hubo un error creando la cuenta',
+          showConfirmButton: false,
+          timer: 1000
+        })
       }
 
     })
@@ -62,20 +75,44 @@ export class UsersComponent implements OnInit {
     this.userUpdate.password = undefined;
     this.userRest.updateUser(this.userUpdate._id, this.userUpdate).subscribe({
       next: (res: any) => {
-        alert(res.message)
+        Swal.fire({
+          position: 'top-end',
+          title: 'Cuenta Actualizada',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1000
+        })
         this.getUsers();
       },
-      error: (err) => alert(err.error.message)
+      error: (err) => Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Hubo un actualizando la cuenta',
+        showConfirmButton: false,
+        timer: 1000
+      })
     })
   }
 
   deleteUser(id:string){
   this.userRest.deleteUser(id).subscribe({
     next: (res:any)=>{
-      alert(res.message);
+      Swal.fire({
+        position: 'top',
+        title: 'Eliminado',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 900
+      })
       this.getUsers();
     },
-    error: (err) => alert(err.error.message)
+    error: (err) => Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Hubo un error eliminando',
+      showConfirmButton: false,
+      timer: 1000
+    })
   })
   }
 

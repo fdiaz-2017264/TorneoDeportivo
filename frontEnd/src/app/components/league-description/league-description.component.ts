@@ -57,11 +57,12 @@ export class LeagueDescriptionComponent implements OnInit {
     this.teamRest.createTeam(this.team).subscribe({
       next: (res: any) => {
         Swal.fire({
-          position: 'center',
+          position: 'top-end',
+          title: 'Liga',
           icon: 'success',
-          title: 'Equipo creado',
+          text: 'Equipo guardado',
           showConfirmButton: false,
-          timer: 2000
+          timer: 900
         })
         this.getTeams();
         teamForm.reset();
@@ -70,7 +71,9 @@ export class LeagueDescriptionComponent implements OnInit {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Error guardando'
+          text: 'Hubo un error guardando',
+          showConfirmButton: false,
+          timer: 1000
         })
       }
     })
@@ -86,20 +89,44 @@ export class LeagueDescriptionComponent implements OnInit {
   updateTeam() {
     this.teamRest.updateTeam(this.teamUpdate._id, this.teamUpdate).subscribe({
       next: (res: any) => {
-        alert(res.message);
+        Swal.fire({
+          position: 'top-end',
+          title: 'Equipo Actualizado',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1000
+        })
         this.getTeams();
       },
-      error: (err) => alert(err.error.message || err.error)
+      error: (err) => Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Hubo un error actualizando',
+        showConfirmButton: false,
+        timer: 1000
+      })
     })
   }
 
   deleteTeam(id: string) {
     this.teamRest.deleteTeam(id).subscribe({
       next: (res: any) => {
-        alert(res.message)
+        Swal.fire({
+          position: 'top',
+          title: 'Eliminado',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 900
+        })
         this.getTeams();
       },
-      error: (err) => alert(err.error.message || err.error)
+      error: (err) => Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Hubo un error eliminando',
+        showConfirmButton: false,
+        timer: 1000
+      })
     })
   }
 

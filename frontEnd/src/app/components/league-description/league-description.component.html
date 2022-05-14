@@ -9,7 +9,8 @@
         <div class="m-3">
             <button class="btn btn-success m-3" data-bs-toggle="modal" data-bs-target="#exampleModal" >Agregar
                 Equipo</button>
-            <button class="btn btn-info m-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Ver marcador</button>
+            <button class="btn btn-info m-3" data-bs-toggle="modal" data-bs-target="#tableAddModal">Agregar marcador</button>
+            <button class="btn btn-info m-3" data-bs-toggle="modal" data-bs-target="#tableModal">Ver marcadores</button>
             <button class="btn btn-danger m-3" data-bs-toggle="modal" data-bs-target="#graphicModal" (click)="getPoints()">Graficas</button>
         </div>
         <div class="row m-5">
@@ -66,6 +67,69 @@
                     <button (click)="createTeam(teamForm)" [disabled]="!teamForm.form.valid" type="submit" class="btn btn-primary"
                         data-bs-dismiss="modal">Guardar
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Agregar Marcador-->
+<div>
+    <div class="modal fade" id="tableAddModal" tabindex="-1" aria-labelledby="tableAddModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tableAddModalLabel">- Marcador Nuevo -</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <form #teamForm="ngForm">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Nombre</label>
+                            <input [(ngModel)]="team.name" name="name2" type="text" class="form-control"
+                                id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Puntos</label>
+                            <input [(ngModel)]="team.value" name="points2" type="text" class="form-control"
+                                id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Goles</label>
+                            <input [(ngModel)]="team.goals" name="goals2" type="text" class="form-control"
+                                id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button (click)="createTeam(teamForm)" [disabled]="!teamForm.form.valid" type="submit" class="btn btn-primary"
+                        data-bs-dismiss="modal">Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Tabla Marcador-->
+
+<div>
+    <div class="modal fade" id="tableModal" tabindex="-1" aria-labelledby="tableModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tableModalLabel">- Marcadores -</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
                 </div>
             </div>
         </div>
