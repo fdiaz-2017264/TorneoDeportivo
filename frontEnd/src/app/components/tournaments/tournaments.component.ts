@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TournamentModel } from 'src/app/models/tournament.model';
 import { TournamentRestService } from 'src/app/services/tournamentRest/tournament-rest.service';
+import { UserRestService } from 'src/app/services/userRest/user-rest.service'
 
 @Component({
   selector: 'app-tournaments',
@@ -10,17 +11,20 @@ import { TournamentRestService } from 'src/app/services/tournamentRest/tournamen
 })
 export class TournamentsComponent implements OnInit {
   tour: TournamentModel;
-  tours:any;
-  tourUpdate:any;
+  tours: any;
+  tourUpdate: any;
+  identity: any;
 
   constructor(
     private tourRest: TournamentRestService,
+    private userRest: UserRestService
   ) {
     this.tour = new TournamentModel('', '')
   }
 
   ngOnInit(): void {
     this.getTours();
+    this.identity = this.userRest.getIdentity().role == 'CLIENT';
   }
 
 
@@ -42,42 +46,42 @@ export class TournamentsComponent implements OnInit {
       next: (res: any) => {
         return this.tours = res.tournament
       },
-      error:(err)=>{
+      error: (err) => {
         return alert(err.error.message)
       }
     })
   }
 
-  getTour(id:string){
+  getTour(id: string) {
     this.tourRest.getTour(id).subscribe({
-      next: (res:any)=>{
+      next: (res: any) => {
         this.tourUpdate = res.tournament;
       },
-      error: (err)=>{
+      error: (err) => {
         return alert(err.error.message)
       }
     })
   }
 
-  updateTour(){
+  updateTour() {
     this.tourRest.updateTour(this.tourUpdate._id, this.tourUpdate).subscribe({
-      next: (res:any)=>{
+      next: (res: any) => {
         alert(res.message);
         this.getTours();
       },
-      error: (err)=>{
+      error: (err) => {
         return alert(err.error.message || err.error)
       }
     })
   }
 
-  deleteTour(id:string){
+  deleteTour(id: string) {
     this.tourRest.deleteTour(id).subscribe({
-      next: (res:any)=> {
+      next: (res: any) => {
         alert(res.message);
         this.getTours();
       },
-      error: (err)=>{
+      error: (err) => {
         return alert(err.error.message)
       }
     })

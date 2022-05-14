@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TeamModel } from 'src/app/models/team.model';
 import { TeamRestService } from '../../services/teamRest/team-rest.service';
 import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-league-description',
@@ -15,6 +16,7 @@ export class LeagueDescriptionComponent implements OnInit {
   idLeague: any
   view: any = [800, 500];
   points: any
+  teamSize: any
 
   constructor(
     private teamRest: TeamRestService,
@@ -22,7 +24,7 @@ export class LeagueDescriptionComponent implements OnInit {
 
   ) {
     this.team = new TeamModel('', '', 0, 0, '');
-    this.points = ([{name:'', value: 0}])
+    this.points = ([{ name: '', value: 0 }])
   }
 
   ngOnInit(): void {
@@ -32,10 +34,10 @@ export class LeagueDescriptionComponent implements OnInit {
     this.getTeams()
   }
 
-  getPoints(){
+  getPoints() {
     this.teamRest.getTeams().subscribe({
       next: (res: any) => {
-          this.points = res.points
+        this.points = res.points
       },
       error: (err) => alert(err.error.message)
     })
@@ -54,12 +56,22 @@ export class LeagueDescriptionComponent implements OnInit {
     this.team.league = this.idLeague;
     this.teamRest.createTeam(this.team).subscribe({
       next: (res: any) => {
-        alert(res.message);
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Equipo creado',
+          showConfirmButton: false,
+          timer: 2000
+        })
         this.getTeams();
         teamForm.reset();
       },
       error: (err) => {
-        alert(err.error.message || err.error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Error guardando'
+        })
       }
     })
   }
@@ -92,16 +104,16 @@ export class LeagueDescriptionComponent implements OnInit {
   }
 
   /* Graficas*/
-  
-  onSelect(data:any): void {
+
+  onSelect(data: any): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   }
 
-  onActivate(data:any): void {
+  onActivate(data: any): void {
     console.log('Activate', JSON.parse(JSON.stringify(data)));
   }
 
-  onDeactivate(data:any): void {
+  onDeactivate(data: any): void {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 }
