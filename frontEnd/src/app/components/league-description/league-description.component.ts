@@ -103,6 +103,7 @@ export class LeagueDescriptionComponent implements OnInit {
           showConfirmButton: false,
           timer: 900
         })
+        this.getTeams()
       },
       error: (err) => {
         Swal.fire({
