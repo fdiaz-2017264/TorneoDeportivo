@@ -1,0 +1,53 @@
+<app-nav-bar></app-nav-bar>
+<form *ngIf="usUpdate">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card text-dark shadow p-3 mb-5 bg-body rounded" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center ">
+              <div class="mb-md-5 mt-md-4 pb-5 m-2 ">
+                <h2 class="fw-bold mb-2 text-uppercase">Perfil</h2>
+  
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+
+                        <div class="form-outline">
+                          <input [(ngModel)]="usUpdate.name" name="name" type="text" class="form-control"
+                          id="3" aria-describedby="emailHelp" required>
+                            <label class="form-label" for="firstName">Nombre</label>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6 mb-4">
+
+                        <div class="form-outline">
+                          <input [(ngModel)]="usUpdate.username" name="username" type="text" class="form-control"
+                          id="user12" aria-describedby="emailHelp" required>
+                            <label class="form-label" for="lastName">Usuario</label>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="form-outline form-white mb-4">
+                  <input [(ngModel)]="usUpdate.email" name="email" type="text" class="form-control"
+                  id="user1" aria-describedby="emailHelp" required>
+                    <label class="form-label" for="typeEmailX">Email</label>
+                </div>
+                
+                
+  
+                <button (click)="update()" class="btn btn-outline-dark btn-secondary px-5 m-2"  type="submit">Editar</button>
+                <button (click)="deleteUser()" class="btn btn-outline-dark btn-secondary px-5 m-2" type="submit">Eliminar</button>
+  
+              </div>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</form>
+
+<app-footer></app-footer>

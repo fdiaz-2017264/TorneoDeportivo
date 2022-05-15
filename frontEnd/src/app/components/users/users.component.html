@@ -1,0 +1,143 @@
+<app-nav-bar></app-nav-bar>
+<div>
+  <div>
+    <div class="m-4 text-center">
+      <h1>- Users -</h1>
+    </div>
+    <div class="dropdown-divider"></div>
+    <div class="m-4">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Agregar
+      </button>
+    </div>
+
+    <div class="m-4 text-center">
+      <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Usuario</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role</th>
+            <th scope="col">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{user.name}}</td>
+            <td>{{user.username}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.role}}</td>
+            <td><a  (click)="getUser(user._id)" type="submit" class="btn btn-link" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+                aria-controls="offcanvasExample">Actualizar</a>
+              <a (click)="deleteUser(user._id)" type="submit" class="btn btn-warning">Eliminar</a>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">- Usuario Nuevo -</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <form #userForm="ngForm">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Nombre</label>
+              <input [(ngModel)]="user.name" #name="ngModel" name="name" type="text" class="form-control"
+                id="exampleInputEmail1" aria-describedby="emailHelp" required>
+              <span *ngIf="!name.valid && name.touched" style="color: rgb(247, 126, 40);">
+                Campo requerido
+              </span>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Usuario</label>
+              <input [(ngModel)]="user.username" #username="ngModel" name="username" type="text" class="form-control"
+                id="exampleInputEmail1" aria-describedby="emailHelp" required>
+              <span *ngIf="!username.valid && username.touched" style="color: rgb(247, 126, 40);">
+                Campo requerido
+              </span>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Email</label>
+              <input [(ngModel)]="user.email" #email="ngModel" name="email" type="text" class="form-control"
+                id="exampleInputEmail1" aria-describedby="emailHelp" required>
+              <span *ngIf="!email.valid && email.touched" style="color: rgb(247, 126, 40);">
+                Campo requerido
+              </span>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Contraseña</label>
+              <input [(ngModel)]="user.password" #password="ngModel" name="password" type="password"
+                class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+              <span *ngIf="!password.valid && password.touched" style="color: rgb(247, 126, 40);">
+                Campo requerido
+              </span>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Role</label>
+              <select [(ngModel)]="user.role" name="category" class="form-select" aria-label="Default select example">
+                <option value="" disabled>Seleccione una opción</option>
+                <option *ngFor="let roll of role" [value]="roll.role">{{ roll.name}}</option>
+              </select>
+            </div>
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button [disabled]="!userForm.form.valid" (click)="saveUser(userForm)" type="submit" class="btn btn-primary"
+            data-bs-dismiss="modal">Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Offcanvas -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <form *ngIf="userUpdate">
+      <div class="mb-3">
+        <label for="name1" class="form-label">Nombre</label>
+        <input [(ngModel)]="userUpdate.name" name="name" type="text" class="form-control"
+          id="name1" aria-describedby="emailHelp" required>
+      </div>
+      <div class="mb-3">
+        <label for="user1" class="form-label">Usuario</label>
+        <input [(ngModel)]="userUpdate.username" name="username" type="text" class="form-control"
+          id="user1" aria-describedby="emailHelp" required>
+      </div>
+      <div class="mb-3">
+        <label for="email1" class="form-label">Email</label>
+        <input [(ngModel)]="userUpdate.email" name="email" type="text" class="form-control"
+          id="email1" aria-describedby="emailHelp" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Role</label>
+        <select [(ngModel)]="userUpdate.role" name="category" class="form-select" aria-label="Default select example">
+          <option *ngFor="let roll of role" [value]="roll.role">{{ roll.name}}</option>
+        </select>
+      </div>
+      <button class="btn btn-info" (click)="updateUs()">Guardar</button>
+    </form>
+  </div>
+</div>
+
+<app-footer></app-footer>

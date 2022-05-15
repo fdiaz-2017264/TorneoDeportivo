@@ -1,0 +1,47 @@
+<body>
+  <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100" >
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card bg-primary text-white" style="border-radius: 1rem;" >
+            <div class="card-body p-5 text-center" style="background-color: #193972; border-radius: 1rem;  ; border-color: black;">
+              <div class="mb-md-5 mt-md-4 pb-5 m-2">
+                <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+  
+                <div class="form-outline form-white mb-4">
+                  <span *ngIf="!username.valid && username.touched" style="color: rgb(247, 126, 40);">
+                    Required Field
+                  </span>
+                  <input [(ngModel)]="user.username" #username="ngModel" name="user" type="email" id="typeEmailX"
+                    class="form-control form-control-lg" required />
+                  <label class="form-label" for="typeEmailX">Username</label>
+                </div>
+  
+                <div class="form-outline form-white mb-4">
+                  <span *ngIf="!password.valid && password.touched" style="color: rgb(247, 126, 40);">
+                    Required Field
+                  </span>
+                  <input [(ngModel)]="user.password" #password="ngModel" name="password" type="password"
+                    id="typePasswordX" class="form-control form-control-lg" required />
+                  <label class="form-label" for="typePasswordX">Password</label>
+                </div>
+  
+                <p class="small mb-5 pb-lg-2"><a class="btn btn-link text-white-50">Did you forget your password?</a></p>
+  
+                <button [disabled]="!loginForm.form.valid" class="btn btn-outline-light btn-secondary px-5" type="submit">Login</button>
+  
+              </div>
+  
+              <div>
+                <p class="mb-0">You do not have an account? <a routerLink="/register"
+                    class="btn btn-link text-white-50">Sign up Here!</a>
+                </p>
+              </div>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>  
+</body>

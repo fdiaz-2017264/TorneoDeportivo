@@ -1,0 +1,131 @@
+<app-nav-bar></app-nav-bar>
+
+
+<div class="container text-center">
+
+    <div class="m-5">
+        <h1>Torneo deportivo</h1>
+        <div class="dropdown-divider"></div>
+        <p>En esta pagina te damos la oportunidad de poder administrar  a tu equipo preferido, además tendrás la oportunidad 
+            de hacer que tu equipo pertenezca a una liga, y participar en un torneo deportivo, cada que tu equipo termine un 
+            partido, se almacenar sus goles y puntos obtenidos, cada equipo que ingrese a un torneo se podrá visualizar su respectiva 
+            Graficas de avances, debes tener en cuenta que nosotros te damos la oportunidad de poder visualizar los torneos que 
+            próximamente se estarán realizando y poder participar.  !Aquí se vive la pasión del futbol!</p><br>
+    </div>
+
+    <div class="m-5">
+        <div class="row m-4">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Torneos</h5>
+                        <p class="card-text">Los torneos que se tienen planeados o se llevan a cabo</p>
+                        <a routerLink="/tournaments" class="btn btn-primary">Ver torneos</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Usuarios</h5>
+                        <p class="card-text">Las cuentas creadas por los clientes y empleados</p>
+                        <a routerLink="/users" class="btn btn-primary">Ver Usuarios</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row m-4">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Marcador</h5>
+                        <p class="card-text">Los goles anotados por cada equipo creado</p>
+                        <a routerLink=""class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tableModal" (click)="getScores()">Ver Marcador</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" >Estadísticas</h5>
+                        <p class="card-text">Los puntos obtenidos por los equipos</p>
+                        <a routerLink="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#graphicModal" (click)="getPoints()">Ver estadisticas</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal Tabla Marcador-->
+
+<div>
+    <div class="modal fade" id="tableModal" tabindex="-1" aria-labelledby="tableModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tableModalLabel">- Marcadores -</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-dark table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col">Visitante</th>
+                            <th scope="col">Goles Visitante</th>
+                            <th scope="col">Local</th>
+                            <th scope="col">Goles Local</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let sc of scores">
+                            <td>{{sc.team1.name}}</td>
+                            <td>{{sc.goals1}}</td>
+                            <td>{{sc.team2.name}}</td>
+                            <td>{{sc.goals2}}</td>
+                          </tr>
+                
+                        </tbody>
+                      </table>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal graficas-->
+
+<div>
+    <div class="modal fade" id="graphicModal" tabindex="-1" aria-labelledby="graphicModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="graphicModalLabel">- Gráficas -</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <ngx-charts-advanced-pie-chart
+                        [view]="view"
+                        scheme="cool"
+                        [results]="points"
+                        (select)="onSelect($event)"
+                        (activate)="onActivate($event)"
+                        (deactivate)="onDeactivate($event)"
+                     >
+                    </ngx-charts-advanced-pie-chart>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>

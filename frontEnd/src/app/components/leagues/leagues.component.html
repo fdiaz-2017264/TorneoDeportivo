@@ -1,0 +1,88 @@
+<app-nav-bar></app-nav-bar>
+
+<div>
+  <div>
+    <div class="m-4">
+      <h1>Ligas</h1>
+    </div>
+    <div class="dropdown-divider"></div>
+    <div >
+      <button class="btn btn-success m-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Agregar</button>
+    </div>
+    <div class="row m-5">
+      <div *ngFor="let leag of leagues | search:idTour" class="card m-4 text-center" style="width: 15rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{leag.name}}</h5>
+          <div class="dropdown-divider"></div>
+          <h6 class="card-subtitle mb-2 text-muted">{{leag.description}}</h6>
+          <button class="btn btn-warning m-2" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+            aria-controls="offcanvasExample" (click)="getLeague(leag._id)">
+            Actualizar
+          </button>
+          <button class="btn btn-danger" (click)="deleteLeague(leag._id)">Eliminar</button>
+          <button class="btn btn-secondary ms-2" [routerLink]="['/leagueDescription/'+leag._id]">Ver</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">- Liga Nueva -</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <form #addLeagueForm="ngForm">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Nombre</label>
+              <input [(ngModel)]="league.name"  name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                required>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Descripción</label>
+              <input [(ngModel)]="league.description"  name="description" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                required>
+            </div>
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button (click)="saveLeague(addLeagueForm)" [disabled]="!addLeagueForm.form.valid" type="submit" class="btn btn-primary"
+            data-bs-dismiss="modal">Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Offcanvas -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">- Actualizar Liga -</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <form class="offcanvas-body" *ngIf="leagueUpdate">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Nombre</label>
+      <input [(ngModel)]="leagueUpdate.name" name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+        required>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Descripción</label>
+      <input [(ngModel)]="leagueUpdate.description" name="description" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+        required>
+    </div>
+    <button class="btn btn-info" (click)="updateLeague()">Guardar</button>
+  </form>
+</div>
+
+<app-footer></app-footer>

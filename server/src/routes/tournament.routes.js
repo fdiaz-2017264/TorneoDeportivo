@@ -9,8 +9,8 @@ api.get('/testTour', tourController.testTour);
 api.post('/createTour', [mdAuth.ensureAuth, mdAuth.isAdmin], tourController.createTournament);
 api.delete('/deleteTour/:id', [mdAuth.ensureAuth, mdAuth.isAdmin], tourController.deleteTournament);
 api.put('/update/:id', [mdAuth.ensureAuth, mdAuth.isAdmin], tourController.update)
-api.get('/getTournaments', [mdAuth.ensureAuth, mdAuth.isAdmin], tourController.getTournaments);
-api.get('/getTournament/:id', [mdAuth.ensureAuth, mdAuth.isAdmin], tourController.getTournament);
+api.get('/getTournaments', [mdAuth.ensureAuth,], tourController.getTournaments);
+api.get('/getTournament/:id', [mdAuth.ensureAuth], tourController.getTournament);
 
 
 module.exports = api;

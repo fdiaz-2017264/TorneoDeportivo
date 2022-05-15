@@ -14,5 +14,6 @@ api.delete('/equiposDelete/:id', mdAuth.ensureAuth, teamController.equiposDelete
 
 api.get('/getEquipos', mdAuth.ensureAuth, teamController.getEquipos);
 
+api.get('/getTeam/:id', mdAuth.ensureAuth, teamController.getTeam);
 
 module.exports = api; 

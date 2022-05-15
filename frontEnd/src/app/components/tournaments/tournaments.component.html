@@ -1,0 +1,84 @@
+<app-nav-bar></app-nav-bar>
+
+<div>
+  <div>
+    <div class="m-4">
+      <h1>Torneos</h1>
+    </div>
+    <div class="dropdown-divider"></div>
+    <div class="m-4">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Agregar
+      </button>
+    </div>
+    <div class="row m-5">
+      <div *ngFor="let tou of tours" class="card m-4 text-center" style="width: 15rem;">
+        <div class="card-body">
+          <h5 class="card-title ">{{ tou.name }}</h5>
+          <div class="dropdown-divider mb-5"></div>
+          <button class="btn btn-warning m-2" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+            aria-controls="offcanvasExample" *ngIf="!identity" (click)="getTour(tou._id)">
+            Actualizar
+          </button>
+          <button class="btn btn-danger" *ngIf="!identity" (click)="deleteTour(tou._id)">Eliminar</button>
+          <button class="btn btn-secondary ms-2" [routerLink]="['/league/' + tou._id]">Ver</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">- Torneo Nuevo -</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <form #tourForm="ngForm">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Nombre</label>
+              <input [(ngModel)]="tour.name" #name="ngModel" name="name" type="text" class="form-control"
+                id="exampleInputEmail1" aria-describedby="emailHelp" required>
+              <span *ngIf="!name.valid && name.touched" style="color: rgb(247, 126, 40);">
+                Campo requerido
+              </span>
+            </div>
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button (click)="createTour(tourForm)" [disabled]="!tourForm.form.valid" type="submit" class="btn btn-primary"
+            data-bs-dismiss="modal">Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Offcanvas -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <form #tourForm="ngForm" *ngIf="tourUpdate">
+      <div class="mb-3">
+        <label for="name" class="form-label">Nombre</label>
+        <input [(ngModel)]="tourUpdate.name" #name="ngModel" name="name" type="text" class="form-control"
+          id="name" aria-describedby="emailHelp" required>
+      </div>
+      <button class="btn btn-info" (click)="updateTour()">Guardar</button>
+    </form>
+  </div>
+</div>
+
+<app-footer></app-footer>
