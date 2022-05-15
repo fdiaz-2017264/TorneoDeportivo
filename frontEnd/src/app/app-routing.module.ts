@@ -19,8 +19,8 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'tournaments', canActivate: [UserGuard], component: TournamentsComponent},
   {path: 'users', canActivate: [UserGuard, AdminGuard], component: UsersComponent},
-  {path: 'league', canActivate: [UserGuard], component: LeaguesComponent},
-  {path: 'leagueDescription', canActivate: [UserGuard], component: LeagueDescriptionComponent},
+  {path: 'league/:idT', canActivate: [UserGuard], component: LeaguesComponent},
+  {path: 'leagueDescription/:idL', canActivate: [UserGuard], component: LeagueDescriptionComponent},
   {path: 'profile', canActivate: [UserGuard], component: ProfileComponent},
   {path: '**', component: NotFoundComponent}
 ];

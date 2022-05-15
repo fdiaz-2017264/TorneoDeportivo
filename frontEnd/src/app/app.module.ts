@@ -17,6 +17,9 @@ import { LeagueDescriptionComponent } from './components/league-description/leag
 import { UsersComponent } from './components/users/users.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { UserRestService } from './services/userRest/user-rest.service';
+import { SearchPipe } from './pipes/search.pipe';
+import { TeamSearchPipe } from './pipes/team-search.pipe';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -31,13 +34,16 @@ import { UserRestService } from './services/userRest/user-rest.service';
     FooterComponent,
     LeagueDescriptionComponent,
     UsersComponent,
-    ProfileComponent
+    ProfileComponent,
+    SearchPipe,
+    TeamSearchPipe
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxChartsModule
   ],
   providers: [
     UserRestService
