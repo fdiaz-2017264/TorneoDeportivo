@@ -5,11 +5,6 @@ const mongoose = require('mongoose');
 const TournamentSchema = mongoose.Schema({
     name: String,
     author: {type: mongoose.Schema.ObjectId, ref: 'User'},
-    leagues :[
-        {   
-            league: {type: mongoose.Schema.ObjectId, ref: 'League'}
-        }
-    ]
 
 });
 

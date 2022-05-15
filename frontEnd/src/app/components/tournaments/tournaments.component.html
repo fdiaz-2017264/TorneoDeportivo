@@ -14,12 +14,13 @@
     <div class="row m-5">
       <div *ngFor="let tou of tours" class="card m-4 text-center" style="width: 15rem;">
         <div class="card-body">
-          <h5 class="card-title">{{ tou.name }}</h5>
+          <h5 class="card-title ">{{ tou.name }}</h5>
+          <div class="dropdown-divider mb-5"></div>
           <button class="btn btn-warning m-2" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-            aria-controls="offcanvasExample" (click)="getTour(tou._id)">
+            aria-controls="offcanvasExample" *ngIf="!identity" (click)="getTour(tou._id)">
             Actualizar
           </button>
-          <button class="btn btn-danger" (click)="deleteTour(tou._id)">Eliminar</button>
+          <button class="btn btn-danger" *ngIf="!identity" (click)="deleteTour(tou._id)">Eliminar</button>
           <button class="btn btn-secondary ms-2" [routerLink]="['/league/' + tou._id]">Ver</button>
         </div>
       </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LeagueRestService } from 'src/app/services/leagueRest/league-rest.service';
 import { LeagueModel } from 'src/app/models/league.model';
 import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-leagues',
@@ -33,7 +34,7 @@ export class LeaguesComponent implements OnInit {
   getLeagues() {
     this.leagueRest.getLeagues().subscribe({
       next: (res: any) => {
-          this.leagues = res.leagues
+        this.leagues = res.leagues
       },
       error: (err) => alert(err.error.message)
     })
@@ -53,24 +54,49 @@ export class LeaguesComponent implements OnInit {
     this.league.tournament = this.idTour;
     this.leagueRest.saveLeague(this.league).subscribe({
       next: (res: any) => {
-        alert(res.message);
+        Swal.fire({
+          position: 'top-end',
+          title: 'Liga',
+          icon: 'success',
+          text: res.message,
+          showConfirmButton: false,
+          timer: 900
+        })
         this.getLeagues();
 
         addLeagueForm.reset();
 
       },
-      error: (err) => alert(err.error.message || err.error)
+      error: (err) => Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Hubo un error guardando',
+        showConfirmButton: false,
+        timer: 1000
+      })
     })
   }
 
   updateLeague() {
     this.leagueRest.updateLeague(this.leagueUpdate._id, this.leagueUpdate).subscribe({
       next: (res: any) => {
-        alert(res.message);
+        Swal.fire({
+          position: 'top-end',
+          title: res.message,
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1000
+        })
         this.getLeagues();
       },
       error: (err) => {
-        alert(err.error.message || err.error)
+        return Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Hubo un error actualizando',
+          showConfirmButton: false,
+          timer: 1000
+        })
       }
     })
   }
@@ -78,10 +104,22 @@ export class LeaguesComponent implements OnInit {
   deleteLeague(id: string) {
     this.leagueRest.deleteLeague(id).subscribe({
       next: (res: any) => {
-        alert(res.message);
+        Swal.fire({
+          position: 'top',
+          title: res.message,
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 900
+        })
         this.getLeagues();
       },
-      error: (err) => alert(err.error.message || err.error)
+      error: (err) => Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Hubo un error eliminando',
+        showConfirmButton: false,
+        timer: 1000
+      })
     })
   }
 

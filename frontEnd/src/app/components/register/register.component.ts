@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserModel } from 'src/app/models/user.model';
 import { UserRestService } from 'src/app/services/userRest/user-rest.service';
 import {Router} from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -26,13 +27,25 @@ export class RegisterComponent implements OnInit {
 
   register(registerForm:any){
     this.userRest.register(this.user).subscribe({
-      next: (response:any)=>{
-          alert(response.message);
+      next: (res:any)=>{
+        Swal.fire({
+          position: 'top-end',
+          title: res.message,
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1000
+        })
           return this.router.navigateByUrl('/login');
       },
       error:(err)=>{
         registerForm.reset();
-        return alert(err.error.message || err.error)
+        return Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Hubo un error creando la cuenta',
+          showConfirmButton: false,
+          timer: 1000
+        })
       }
       
     })

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserModel } from 'src/app/models/user.model';
 import { UserRestService } from 'src/app/services/userRest/user-rest.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -14,36 +15,48 @@ export class LoginComponent implements OnInit {
     private userRest: UserRestService,
     private router: Router
   ) {
-    this.user = new UserModel('','','','','','');
-   }
+    this.user = new UserModel('', '', '', '', '', '');
+  }
 
   ngOnInit(): void {
     this.registerAdmin();
   }
 
-  login(loginForm:any){
+  login(loginForm: any) {
     this.userRest.login(this.user).subscribe({
-      next:(res:any)=>{
-        alert(res.message)
+      next: (res: any) => {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Logeado',
+          showConfirmButton: false,
+          timer: 1000
+        })
         localStorage.setItem('token', res.token);
         localStorage.setItem('identity', JSON.stringify(res.alreadyUse));
         this.router.navigateByUrl('/');
       },
-      error: (err)=>{
+      error: (err) => {
         loginForm.reset();
-        return alert(err.error.message || err.error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Usuario o contraseña incorrecto',
+          showConfirmButton: false,
+          timer: 1000
+        })
       }
     })
   }
 
-  registerAdmin(){
+  registerAdmin() {
     this.userRest.createAdmin().subscribe({
-      next: (response:any)=>{
+      next: (response: any) => {
         this.user = response.save
       },
-      error:(err)=> alert(err.error.message)
+      error: (err) => alert(err.error.message)
     })
   }
 
-  
+
 }
